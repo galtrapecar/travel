@@ -4,6 +4,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: $color-mono300;
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 400;
 }
 
 html {
@@ -11,3 +15,5 @@ html {
 }
 
 @import './pages/Explore/Explore.scss';
+
+@import './components/Modal.scss';

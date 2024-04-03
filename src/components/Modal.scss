@@ -1,0 +1,12 @@
+.Modal {
+    position: absolute;
+    z-index: 99999;
+    top: 40px;
+    left: 40px;
+    min-width: 508px;
+    min-height: 200px;
+    border-radius: 5px;
+    padding: 24px;
+    padding-bottom: 32px;
+    background-color: $color-mono700;
+}

@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { useEffect, useRef } from "react";
+import Modal from "../../components/Modal";
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -31,6 +32,9 @@ const Explore = () => {
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
+      <Modal>
+        <div>Where do you want to start from?</div>
+      </Modal>
     </div>
   );
 };
