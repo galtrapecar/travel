@@ -1,0 +1,13 @@
+@import './_definitions.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: $color-mono900;
+}
+
+@import './pages/Explore/Explore.scss';
