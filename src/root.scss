@@ -16,4 +16,6 @@ html {
 
 @import './pages/Explore/Explore.scss';
 
-@import './components/Modal.scss';
+@import './components/Modal/Modal.scss';
+@import './components/SearchBar/SearchBar.scss';
+@import './pages/Explore/components/StartLocationDialog/StartLocationDialog.scss';

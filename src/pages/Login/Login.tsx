@@ -1,10 +1,10 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
   return (
     <>
       <Helmet>
-        <title>{"Login"}</title>
+        <title>{'Login'}</title>
       </Helmet>
       <div className="Login"></div>
     </>

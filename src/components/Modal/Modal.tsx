@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { Portal } from "react-portal";
+import { ReactNode } from 'react';
+import { Portal } from 'react-portal';
 
 type ModalProps = {
   children: ReactNode;

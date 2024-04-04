@@ -1,4 +1,4 @@
 export enum Routes {
-  Login = "/login",
-  Explore = "/explore",
+  Login = '/login',
+  Explore = '/explore',
 }
