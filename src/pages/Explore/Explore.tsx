@@ -2,6 +2,7 @@ import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
+import window from '../../window';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -13,6 +14,7 @@ const Explore = () => {
       zoom: 12,
       zoomControl: false,
     });
+    window.map = map;
     L.tileLayer(
       'https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=QLSEpx2wahheTvKGENf4',
       {

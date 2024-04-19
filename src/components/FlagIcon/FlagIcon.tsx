@@ -19,8 +19,8 @@ const FlagIcon = ({ iso2, iso3, width, height }: FlagIconProps) => {
         <text
           x="50%"
           y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
+          dominantBaseline="middle"
+          textAnchor="middle"
           fontSize={width || height || 24}
         >
           {iso2FlagEmoji(iso2!)}
