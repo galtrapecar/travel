@@ -1,4 +1,5 @@
 .SearchBar {
+  position: relative;
   width: 100%;
   height: 56px;
   padding: 16px 20px;
@@ -12,5 +13,41 @@
     outline: none;
     border: none;
     width: 100%;
+  }
+
+  &__results {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    max-height: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: scroll;
+    background-color: $color-mono600;
+    border: 1px solid rgba($color: $color-mono400, $alpha: 0.5);
+    border-radius: 6px;
+    padding: 16px 10px;
+
+    &__result {
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &__label {
+        transition: 0.2s;
+      }
+
+      &:hover {
+        background-color: $color-mono400;
+      }
+      &:hover & {
+        &__label {
+          color: $color-white;
+        }
+      }
+    }
   }
 }

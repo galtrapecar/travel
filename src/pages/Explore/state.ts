@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 const startLocationAtom = atom<string>({
-    key: 'startLocation',
-    default: '',
-})
+  key: 'startLocation',
+  default: '',
+});
