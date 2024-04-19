@@ -4,6 +4,7 @@ import IconButton from '../../../../components/IconButton/IconButton';
 import SearchBar from '../../../../components/SearchBar/SearchBar';
 import useSearchCity from '../../hooks/useSearchCity';
 import _ from 'lodash';
+import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
 
 const StartLocationDialog = () => {
   const [query, setQuery] = useState('');
@@ -24,7 +25,7 @@ const StartLocationDialog = () => {
         onInput={(e) => setQuery(e.target.value)}
         results={cities
           .filter((city) => _.isString(city.city))
-          .map((city) => ({ label: city.city! }))}
+          .map((city) => ({ label: city.city!, icon: <FlagIcon iso2={city.iso2} /> }))}
       />
       <div>Or</div>
       <IconButton
