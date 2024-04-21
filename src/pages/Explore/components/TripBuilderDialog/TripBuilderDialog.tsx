@@ -3,10 +3,16 @@ import { startLocationAtom } from '../../state';
 import _ from 'lodash';
 import useBuildTrip from '../../hooks/useBuildTrip';
 import CityPill from '../../../../components/CityPill/CityPill';
+import TransportCards from '../TransportCards/TransportCards';
+import { TransportType } from '../../../../types';
 
 const TripBuilderDialog = () => {
   const startLocation = useRecoilValue(startLocationAtom);
-  const { trip, addLocation, removeLocation } = useBuildTrip();
+  const { trip, addTransport, removeLocation } = useBuildTrip();
+
+  const onSelectTransport = (type: TransportType) => {
+    addTransport(type);
+  };
 
   if (!_.isObject(startLocation)) {
     return null;
@@ -14,12 +20,18 @@ const TripBuilderDialog = () => {
 
   return (
     <div className="TripBuilderDialog">
+      <div className="TripBuilderDialog__start">
+        Starting from
+        <CityPill {...startLocation} />
+      </div>
       {trip.map((location) => {
-        if (location.startLocation)
-          return <div className="TripBuilderDialog__start">
-            Starting from
-            <CityPill {...startLocation} />
-          </div>;
+        if (!_.isObject(location.transport)) {
+          return (
+            <div className="TripBuilderDialog__transportCards">
+              <TransportCards onSelect={onSelectTransport} />
+            </div>
+          );
+        }
       })}
     </div>
   );

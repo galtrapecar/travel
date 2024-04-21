@@ -10,12 +10,18 @@ export type City = {
   id?: number;
 };
 
-export type Transport = {
+export enum TransportType {
+  Plane = 'tlane',
+  Car = 'car',
+  Train = 'train',
+}
 
+export type Transport = {
+  type: TransportType,
 };
 
 export type Location = {
-  city: City;
+  city?: City;
   transport?: Transport;
   startLocation?: boolean;
 }

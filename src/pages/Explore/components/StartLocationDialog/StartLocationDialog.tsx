@@ -16,6 +16,7 @@ const StartLocationDialog = () => {
   const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
   const [query, setQuery] = useState('');
   const { cities } = useSearchCity(query);
+  const { addLocation } = useBuildTrip();
 
   const getMyLocation = () => {
     const geolocation = navigator.geolocation;
@@ -41,6 +42,7 @@ const StartLocationDialog = () => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     setStartLocation(city || null);
+    addLocation({});
   };
 
   if (_.isObject(startLocation)) {
