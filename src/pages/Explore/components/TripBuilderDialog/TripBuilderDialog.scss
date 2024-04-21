@@ -1,0 +1,10 @@
+.TripBuilderDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  &__start {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

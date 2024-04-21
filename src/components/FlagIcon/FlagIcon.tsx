@@ -9,6 +9,17 @@ type FlagIconProps = {
 
 const FlagIcon = ({ iso2, iso3, width, height }: FlagIconProps) => {
   if (!iso2 && !iso3) return null;
+
+  const getFontSize = () => {
+    if (width) {
+      return width * 0.75;
+    }
+    if (height) {
+      return height * 0.75;
+    }
+    return 18;
+  };
+
   return (
     <div className="FlagIcon">
       <svg
@@ -18,10 +29,10 @@ const FlagIcon = ({ iso2, iso3, width, height }: FlagIconProps) => {
       >
         <text
           x="50%"
-          y="50%"
+          y="57%"
           dominantBaseline="middle"
           textAnchor="middle"
-          fontSize={width || height || 24}
+          style={{ fontSize: getFontSize() }}
         >
           {iso2FlagEmoji(iso2!)}
         </text>

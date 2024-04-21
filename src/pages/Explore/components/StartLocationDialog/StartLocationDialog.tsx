@@ -7,9 +7,13 @@ import _ from 'lodash';
 import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
 import L from 'leaflet';
 import window from '../../../../window';
+import { useRecoilState } from 'recoil';
+import { startLocationAtom } from '../../state';
+import useBuildTrip from '../../hooks/useBuildTrip';
 
 const StartLocationDialog = () => {
   const markerRef = useRef<L.Marker | undefined>();
+  const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
   const [query, setQuery] = useState('');
   const { cities } = useSearchCity(query);
 
@@ -33,6 +37,16 @@ const StartLocationDialog = () => {
     map.flyTo([city.lat, city.lng], 13, { animate: true, duration: 3 });
   };
 
+  const onSelect = (index: number) => {
+    const filtered = cities.filter((city) => _.isString(city.city));
+    const city = filtered.at(index);
+    setStartLocation(city || null);
+  };
+
+  if (_.isObject(startLocation)) {
+    return null;
+  }
+
   return (
     <div className="StartLocationDialog">
       <div>Where do you want to start from?</div>
@@ -46,6 +60,7 @@ const StartLocationDialog = () => {
             icon: <FlagIcon iso2={city.iso2} />,
           }))}
         onResultHover={onHover}
+        onResultClick={onSelect}
       />
       <div>Or</div>
       <IconButton

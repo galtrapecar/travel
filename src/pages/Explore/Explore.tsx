@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
 import window from '../../window';
+import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -37,6 +38,7 @@ const Explore = () => {
       <div id="map" ref={mapRef} />
       <Modal>
         <StartLocationDialog />
+        <TripBuilderDialog />
       </Modal>
     </div>
   );

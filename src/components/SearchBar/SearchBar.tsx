@@ -8,13 +8,15 @@ type SearchBarResult = {
 
 type SearchBarProps = {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onResultClick?: (index: number) => void;
+  onResultHover?: (index: number) => void;
   placeholder?: string;
   results?: SearchBarResult[];
-  onResultHover?: (index: number) => void;
 };
 
 const SearchBar = ({
   onInput,
+  onResultClick,
   onResultHover,
   placeholder,
   results,
@@ -30,6 +32,7 @@ const SearchBar = ({
               key={i}
               className="SearchBar__results__result"
               onMouseEnter={() => onResultHover?.(i)}
+              onClick={() => onResultClick?.(i)}
             >
               <div className="SearchBar__results__result__label">
                 {result.label}
