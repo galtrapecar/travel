@@ -10,6 +10,14 @@
   font-weight: 400;
 }
 
+svg {
+  color: inherit;
+}
+
+path {
+  color: inherit;
+}
+
 html {
   background-color: $color-mono900;
 }
@@ -21,6 +29,7 @@ html {
 @import './components/IconButton/IconButton.scss';
 @import './components/FlagIcon/FlagIcon.scss';
 @import './components/CityPill/CityPill.scss';
+@import './pages/Explore/components/TransportDialog/TransportDialog.scss';
 @import './pages/Explore/components/StartLocationDialog/StartLocationDialog.scss';
 @import './pages/Explore/components/TripBuilderDialog/TripBuilderDialog.scss';
 @import './pages/Explore/components/TransportCards/TransportCards.scss';

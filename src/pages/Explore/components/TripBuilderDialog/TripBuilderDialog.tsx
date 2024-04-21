@@ -5,10 +5,11 @@ import useBuildTrip from '../../hooks/useBuildTrip';
 import CityPill from '../../../../components/CityPill/CityPill';
 import TransportCards from '../TransportCards/TransportCards';
 import { TransportType } from '../../../../types';
+import TransportDialog from '../TransportDialog/TransportDialog';
 
 const TripBuilderDialog = () => {
   const startLocation = useRecoilValue(startLocationAtom);
-  const { trip, addTransport, removeLocation } = useBuildTrip();
+  const { trip, addTransport } = useBuildTrip();
 
   const onSelectTransport = (type: TransportType) => {
     addTransport(type);
@@ -31,6 +32,9 @@ const TripBuilderDialog = () => {
               <TransportCards onSelect={onSelectTransport} />
             </div>
           );
+        }
+        if (_.isObject(location.transport) && !_.isObject(location.city)) {
+          return <TransportDialog transport={location.transport} />;
         }
       })}
     </div>

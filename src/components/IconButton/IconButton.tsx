@@ -1,12 +1,27 @@
 type IconButtonProps = {
+  className?: string;
   icon?: JSX.Element;
-  label: JSX.Element | string;
+  label?: JSX.Element | string;
   onClick?: () => void;
+  small?: boolean;
 };
 
-const IconButton = ({ icon, label, onClick }: IconButtonProps) => {
+const IconButton = ({
+  className,
+  icon,
+  label,
+  onClick,
+  small,
+}: IconButtonProps) => {
+  if (small) {
+    return (
+      <div className={`IconButtonSmall ${className}`} onClick={onClick}>
+        {icon}
+      </div>
+    );
+  }
   return (
-    <div className="IconButton" onClick={onClick}>
+    <div className={`IconButton ${className}`} onClick={onClick}>
       {label}
       {icon}
     </div>

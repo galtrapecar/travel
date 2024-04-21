@@ -21,6 +21,10 @@
       background-color: $color-white;
     }
 
+    &__icon {
+      color: $color-mono900;
+    }
+
     &__label {
       font-size: 24px;
       color: $color-mono900;

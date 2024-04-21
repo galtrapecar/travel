@@ -1,0 +1,15 @@
+.TransportDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__type {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  span {
+    color: $color-mono100;
+  }
+}

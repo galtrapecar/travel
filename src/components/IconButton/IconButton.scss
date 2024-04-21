@@ -13,4 +13,21 @@
   &:hover {
     border: 1px solid $color-white;
   }
+  svg {
+    color: $color-mono100;
+  }
+}
+
+.IconButtonSmall {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: 0.1s;
+  &:hover {
+    background-color: $color-mono500;
+  }
 }

@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
 import window from '../../window';
