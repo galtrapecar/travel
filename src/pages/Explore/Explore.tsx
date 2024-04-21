@@ -7,7 +7,6 @@ import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog'
 import Drawer from '../../components/Drawer/Drawer';
 import { useRecoilState } from 'recoil';
 import { cityDrawerOpenAtom } from './state';
-import { image_search } from 'duckduckgo-images-api';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
