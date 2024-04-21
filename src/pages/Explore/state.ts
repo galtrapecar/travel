@@ -10,3 +10,8 @@ export const tripAtom = atom<Trip>({
   key: 'trip',
   default: [],
 })
+
+export const cityDrawerOpenAtom = atom<boolean>({
+  key: 'cityDrawerOpen',
+  default: false,
+})

@@ -4,9 +4,14 @@ import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
 import window from '../../window';
 import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog';
+import Drawer from '../../components/Drawer/Drawer';
+import { useRecoilState } from 'recoil';
+import { cityDrawerOpenAtom } from './state';
+import { image_search } from 'duckduckgo-images-api';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -40,6 +45,9 @@ const Explore = () => {
         <StartLocationDialog />
         <TripBuilderDialog />
       </Modal>
+      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <div>test</div>
+      </Drawer>
     </div>
   );
 };
