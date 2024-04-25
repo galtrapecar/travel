@@ -9,9 +9,14 @@ export const startLocationAtom = atom<City | null>({
 export const tripAtom = atom<Trip>({
   key: 'trip',
   default: [],
-})
+});
+
+export const currentCityAtom = atom<City | null>({
+  key: 'currentCity',
+  default: null,
+});
 
 export const cityDrawerOpenAtom = atom<boolean>({
   key: 'cityDrawerOpen',
   default: false,
-})
+});

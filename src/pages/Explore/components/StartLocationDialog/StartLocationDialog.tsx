@@ -7,13 +7,14 @@ import _ from 'lodash';
 import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
 import L from 'leaflet';
 import window from '../../../../window';
-import { useRecoilState } from 'recoil';
-import { startLocationAtom } from '../../state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { currentCityAtom, startLocationAtom } from '../../state';
 import useBuildTrip from '../../hooks/useBuildTrip';
 
 const StartLocationDialog = () => {
   const markerRef = useRef<L.Marker | undefined>();
   const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
+  const setCurrentCity = useSetRecoilState(currentCityAtom);
   const [query, setQuery] = useState('');
   const { cities } = useSearchCity(query);
   const { addLocation } = useBuildTrip();
@@ -42,6 +43,7 @@ const StartLocationDialog = () => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     setStartLocation(city || null);
+    setCurrentCity(city || null);
     addLocation({});
   };
 

@@ -2,14 +2,9 @@ import { useRecoilState } from 'recoil';
 import { tripAtom } from '../state';
 import { City, Location, TransportType } from '../../../types';
 import _ from 'lodash';
-import { useEffect } from 'react';
 
 const useBuildTrip = () => {
   const [trip, setTrip] = useRecoilState(tripAtom);
-
-  useEffect(() => {
-    console.log(trip);
-  }, [trip]);
 
   const addTransport = (type: TransportType) => {
     const location = {

@@ -8,4 +8,11 @@
     margin-bottom: 16px;
     transform: translateX(-30%);
   }
+
+  &__cityCards {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 }
