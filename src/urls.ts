@@ -7,13 +7,6 @@ export const CitiesAPIUrls = {
     return url.toString();
   },
 
-  getCityImagesUrl: (query: string) => {
-    const url = new URL(`${API_URL}/cities/images`);
-    url.searchParams.append('query', query);
-    url.searchParams.append('random', String(Math.random()));
-    return url.toString();
-  },
-
   getCitiesInRadiusUrl: (
     lat: number,
     lng: number,
@@ -28,3 +21,12 @@ export const CitiesAPIUrls = {
     return url.toString();
   },
 };
+
+export const ImagesAPIUrls = {
+  getImages: (query: string) => {
+    const url = new URL(`${API_URL}/images`);
+    url.searchParams.append('query', query);
+    url.searchParams.append('random', String(Math.random()));
+    return url.toString();
+  }
+}

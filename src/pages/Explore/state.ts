@@ -20,3 +20,8 @@ export const cityDrawerOpenAtom = atom<boolean>({
   key: 'cityDrawerOpen',
   default: false,
 });
+
+export const selectedCityInfoAtom = atom<City & { image?: string } | null>({
+  key: 'selectedCityInfo',
+  default: null,
+});

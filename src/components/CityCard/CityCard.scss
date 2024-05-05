@@ -11,6 +11,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
   &::after {
     content: '';
     position: absolute;
@@ -25,9 +26,11 @@
       rgba(0, 0, 0, 0) 40%
     );
     border-radius: 10px;
+    transition: all 0.3s;
   }
-  & > *{
+  & > * {
     z-index: 1;
+    transition: all 0.1s;
   }
   &__info {
     display: flex;
@@ -43,5 +46,23 @@
       font-weight: normal;
       color: $color-white;
     }
+  }
+  &:hover {
+    & > div:not(.IconButtonSmall) {
+      opacity: 0.2;
+    }
+    & > .IconButtonSmall {
+      display: initial;
+    }
+    &::after {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .IconButtonSmall {
+    color: $color-white;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: none;
   }
 }

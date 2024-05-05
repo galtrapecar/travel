@@ -1,3 +1,5 @@
+import cx from 'classnames';
+
 type IconButtonProps = {
   className?: string;
   icon?: JSX.Element;
@@ -15,13 +17,19 @@ const IconButton = ({
 }: IconButtonProps) => {
   if (small) {
     return (
-      <div className={`IconButtonSmall ${className}`} onClick={onClick}>
+      <div
+        className={cx('IconButtonSmall', className, {
+          'IconButtonSmall--withLabel': Boolean(label),
+        })}
+        onClick={onClick}
+      >
         {icon}
+        {label}
       </div>
     );
   }
   return (
-    <div className={`IconButton ${className}`} onClick={onClick}>
+    <div className={cx('IconButton', className)} onClick={onClick}>
       {label}
       {icon}
     </div>

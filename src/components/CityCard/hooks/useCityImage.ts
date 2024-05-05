@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { City } from '../../../types';
-import { CitiesAPIUrls } from '../../../urls';
+import { ImagesAPIUrls } from '../../../urls';
 import { DuckDuckGoImage } from 'duckduckgo-images-api';
 
 const useCityImage = (city: City) => {
@@ -8,7 +8,7 @@ const useCityImage = (city: City) => {
 
   const fetchImage = async () => {
     if (!city || !city.city) return;
-    const url = CitiesAPIUrls.getCityImagesUrl(`${city.city} city town ${city.country}`);
+    const url = ImagesAPIUrls.getImages(`${city.city} city town ${city.country}`);
     try {
       const response = await fetch(url);
       const images: DuckDuckGoImage[] = await response.json();

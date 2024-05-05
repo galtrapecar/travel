@@ -6,16 +6,18 @@ import window from '../../window';
 import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog';
 import Drawer from '../../components/Drawer/Drawer';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { cityDrawerOpenAtom, currentCityAtom } from './state';
+import { cityDrawerOpenAtom, currentCityAtom, selectedCityInfoAtom } from './state';
 import useGetCitiesInRadius from './hooks/useGetCitiesInRadius';
 import CityCard from '../../components/CityCard/CityCard';
 import { City } from '../../types';
+import CityInfo from '../../components/CityInfo/CityInfo';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
   const currentCity = useRecoilValue(currentCityAtom);
+  const selectedCityInfo = useRecoilValue(selectedCityInfoAtom);
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
 
   useEffect(() => {
@@ -42,6 +44,10 @@ const Explore = () => {
       map.remove();
     };
   }, []);
+
+  useEffect(() => {
+
+  }, [])
 
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
@@ -73,6 +79,7 @@ const Explore = () => {
             ))}
         </div>
       </Drawer>
+      {selectedCityInfo && <CityInfo {...selectedCityInfo} />}
     </div>
   );
 };

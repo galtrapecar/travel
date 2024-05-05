@@ -1,0 +1,36 @@
+.CityInfo {
+  background-color: $color-mono700;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99999;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: slide-in 0.5s forwards;
+
+  &--closing {
+    animation: slide-out 0.5s forwards;
+  }
+
+  @keyframes slide-in {
+    from {
+      right: -100%;
+    }
+    to {
+      right: 0;
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      right: 0;
+    }
+    to {
+      right: -100%;
+    }
+  }
+}
