@@ -45,10 +45,6 @@ const Explore = () => {
     };
   }, []);
 
-  useEffect(() => {
-
-  }, [])
-
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     const map = window.map as L.Map;
@@ -70,7 +66,7 @@ const Explore = () => {
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <div className="Explore__cityCards">
           {citiesInRadius &&
-            citiesInRadius.map((city, index) => (
+            citiesInRadius.slice(0, 10).map((city, index) => (
               <CityCard
                 key={(city.city || '') + (city.country || index)}
                 {...city}

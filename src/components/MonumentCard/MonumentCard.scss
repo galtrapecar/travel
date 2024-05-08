@@ -1,0 +1,23 @@
+.MonumentCard {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__image {
+    width: 200px;
+    height: 165px;
+    border-radius: 8px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &__name {
+    background-color: $color-mono600;
+    color: $color-white;
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+}

@@ -9,11 +9,32 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
   animation: slide-in 0.5s forwards;
+
+  .CityInfoHeader {
+    margin-top: 24px;
+  }
 
   &--closing {
     animation: slide-out 0.5s forwards;
+  }
+
+  &__section {
+    margin-top: 40px;
+    &__header {
+      font-size: 24px;
+      color: $color-white;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    &__cards {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
   }
 
   @keyframes slide-in {

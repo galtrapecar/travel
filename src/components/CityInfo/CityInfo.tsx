@@ -6,18 +6,21 @@ import IconButton from '../IconButton/IconButton';
 import _ from 'lodash';
 import { useRef, useState } from 'react';
 import cx from 'classnames';
+import useMonuments from '../../pages/Explore/hooks/useMonuments';
+import { City } from '../../types';
+import MonumentCard from '../MonumentCard/MonumentCard';
+import useWorldHeritageSites from '../../pages/Explore/hooks/useWorldHeritageSites';
+import WorldHeritageSiteCard from '../WorldHeritageSiteCard/WorldHeritageSiteCard';
+import { Images } from '../../assets/img';
 
-type CityInfoProps = {
-  city?: string;
-  country?: string;
-  iso2?: string;
-  image?: string;
-};
+type CityInfoProps = City & { image?: string };
 
-const CityInfo = ({ city, country, iso2, image }: CityInfoProps) => {
+const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const setSelectedCityInfo = useSetRecoilState(selectedCityInfoAtom);
   const [isClosing, setIsClosing] = useState(false);
+  const { monuments } = useMonuments(lat, lng);
+  const { worldHeritageSites } = useWorldHeritageSites(lat, lng);
 
   const onClose = () => {
     if (ref.current) {
@@ -45,6 +48,29 @@ const CityInfo = ({ city, country, iso2, image }: CityInfoProps) => {
         onClick={onClose}
       />
       <CityInfoHeader city={city} country={country} iso2={iso2} image={image} />
+      {worldHeritageSites?.length > 0 && (
+        <div className="CityInfo__section">
+          <div className="CityInfo__section__header">
+            {Images.WordlHeritage}World Heritage
+          </div>
+          <div className="CityInfo__section__cards">
+            {worldHeritageSites.map((worldHeritageSite) => (
+              <WorldHeritageSiteCard
+                key={worldHeritageSite.id}
+                {...worldHeritageSite}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="CityInfo__section">
+        <div className="CityInfo__section__header">Monuments</div>
+        <div className="CityInfo__section__cards">
+          {monuments.map((monument) => (
+            <MonumentCard key={monument.id} {...monument} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

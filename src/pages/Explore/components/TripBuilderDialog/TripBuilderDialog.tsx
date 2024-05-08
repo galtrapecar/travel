@@ -25,10 +25,10 @@ const TripBuilderDialog = () => {
         Starting from
         <CityPill {...startLocation} />
       </div>
-      {trip.map((location) => {
+      {trip.map((location, i) => {
         if (!_.isObject(location.transport)) {
           return (
-            <div className="TripBuilderDialog__transportCards">
+            <div key={location.city?.city || String(i)} className="TripBuilderDialog__transportCards">
               <TransportCards onSelect={onSelectTransport} />
             </div>
           );
