@@ -3,12 +3,13 @@
   flex-direction: column;
   gap: 16px;
   height: 100%;
-  width: 700px;
+  width: 800px;
   &__top {
     width: 100%;
     display: flex;
     flex-grow: 1;
     flex-shrink: 0;
+    gap: 8px;
     align-items: center;
     padding: 16px;
     border-radius: 10px;
@@ -16,6 +17,11 @@
     color: $color-white;
     font-weight: 400;
     background-color: $color-mono600;
+    i {
+      font-size: 20px;
+      color: $color-white;
+      font-weight: 400;
+    }
   }
   &__middle {
     height: 250px;
@@ -51,6 +57,9 @@
     font-size: 14px;
     color: $color-mono200;
     font-weight: 400;
+    p {
+      font-size: 14px;
+    }
   }
   &__bottom {
     width: 100%;

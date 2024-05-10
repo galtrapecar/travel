@@ -5,7 +5,10 @@ import OpenLinkButton from '../OpenLinkButton/OpenLinkButton';
 const WorldHeritageSiteCard = (site: WorldHeritageSite) => {
   return (
     <div className="WorldHeritageSiteCard">
-      <div className="WorldHeritageSiteCard__top">{site.name}</div>
+      <div
+        className="WorldHeritageSiteCard__top"
+        dangerouslySetInnerHTML={{ __html: site.name }}
+      />
       <div className="WorldHeritageSiteCard__middle">
         <div
           className="WorldHeritageSiteCard__image"

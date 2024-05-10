@@ -1,10 +1,12 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Portal } from 'react-portal';
 import IconButton from '../IconButton/IconButton';
 import { Icons } from '../../assets/icons';
 
 type ModalProps = {
   children: ReactNode;
+  open: boolean;
+  setModalOpen: (state: boolean) => void;
 };
 
 type OpenModalButtonProps = {
@@ -14,9 +16,12 @@ type OpenModalButtonProps = {
 
 const OpenModalButton = ({ open, onOpen }: OpenModalButtonProps) => {
   return (
-    <div className={`OpenModalButton ${open ? 'open' : 'closed'}`} onClick={onOpen}>
+    <div
+      className={`OpenModalButton ${open ? 'open' : 'closed'}`}
+      onClick={onOpen}
+    >
       <IconButton
-        className='OpenModalButton__button'
+        className="OpenModalButton__button"
         small
         icon={
           <Icons.ChevronLeftIcon
@@ -30,8 +35,7 @@ const OpenModalButton = ({ open, onOpen }: OpenModalButtonProps) => {
   );
 };
 
-const Modal = ({ children }: ModalProps) => {
-  const [open, setOpen] = useState(true);
+const Modal = ({ children, open, setModalOpen }: ModalProps) => {
   return (
     <>
       <Portal>
@@ -41,14 +45,14 @@ const Modal = ({ children }: ModalProps) => {
             small
             icon={<Icons.ChevronLeftIcon width={24} height={24} />}
             onClick={() => {
-              setOpen(false);
+              setModalOpen(false);
             }}
           />
           {children}
         </div>
       </Portal>
       <Portal>
-        <OpenModalButton open={!open} onOpen={() => setOpen(true)} />
+        <OpenModalButton open={!open} onOpen={() => setModalOpen(true)} />
       </Portal>
     </>
   );

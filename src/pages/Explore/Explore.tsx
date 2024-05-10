@@ -1,20 +1,26 @@
 import L from 'leaflet';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
-import window from '../../window';
 import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog';
 import Drawer from '../../components/Drawer/Drawer';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { cityDrawerOpenAtom, currentCityAtom, selectedCityInfoAtom } from './state';
+import {
+  cityDrawerOpenAtom,
+  currentCityAtom,
+  selectedCityInfoAtom,
+} from './state';
 import useGetCitiesInRadius from './hooks/useGetCitiesInRadius';
 import CityCard from '../../components/CityCard/CityCard';
 import { City } from '../../types';
 import CityInfo from '../../components/CityInfo/CityInfo';
+import _ from 'lodash';
+import { MapControlls } from '../../mapControlls';
+import CustomMarker from '../../components/CustomMarker/CustomMarker';
 
 const Explore = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const markerRef = useRef<L.Marker | null>(null);
+  const [modalOpen, setModalOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
   const currentCity = useRecoilValue(currentCityAtom);
   const selectedCityInfo = useRecoilValue(selectedCityInfoAtom);
@@ -27,7 +33,7 @@ const Explore = () => {
       zoom: 12,
       zoomControl: false,
     });
-    window.map = map;
+    MapControlls.init(map);
     L.tileLayer(
       'https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=QLSEpx2wahheTvKGENf4',
       {
@@ -45,34 +51,53 @@ const Explore = () => {
     };
   }, []);
 
+  useEffect(() => {
+    MapControlls.flyToCity(currentCity);
+  }, [citiesInRadius]);
+
+  useEffect(() => {
+    const map = MapControlls.map;
+    if (!map) return;
+    if (drawerOpen) {
+      setModalOpen(false);
+      map.panBy([450 / 2, 0]);
+    }
+    if (!drawerOpen) {
+      map.panBy([-450 / 2, 0]);
+    }
+  }, [drawerOpen]);
+
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
-    const map = window.map as L.Map;
-    if (!map) return;
-    if (markerRef.current) {
-      map.removeLayer(markerRef.current);
-    }
-    markerRef.current = L.marker([city.lat, city.lng], {}).addTo(map);
-    map.flyTo([city.lat, city.lng], 13, { animate: true, duration: 3 });
+    MapControlls.addTemporaryMarker(
+      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+    );
+    if (!currentCity) return;
+    MapControlls.addTemporaryPolyline([
+      [currentCity.lat, currentCity.lng],
+      [city.lat, city.lng],
+    ]);
   };
 
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
-      <Modal>
+      <Modal open={modalOpen} setModalOpen={setModalOpen}>
         <StartLocationDialog />
         <TripBuilderDialog />
       </Modal>
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <div className="Explore__cityCards">
           {citiesInRadius &&
-            citiesInRadius.slice(0, 10).map((city, index) => (
-              <CityCard
-                key={(city.city || '') + (city.country || index)}
-                {...city}
-                onMouseEnter={onCityCardHover}
-              />
-            ))}
+            citiesInRadius
+              .slice(0, 10)
+              .map((city, index) => (
+                <CityCard
+                  key={(city.city || '') + (city.country || index)}
+                  {...city}
+                  onMouseEnter={onCityCardHover}
+                />
+              ))}
         </div>
       </Drawer>
       {selectedCityInfo && <CityInfo {...selectedCityInfo} />}
