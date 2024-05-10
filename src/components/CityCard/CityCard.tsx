@@ -7,8 +7,13 @@ import useCityImage from './hooks/useCityImage';
 import { selectedCityInfoAtom } from '../../pages/Explore/state';
 import _ from 'lodash';
 
-const CityCard = (props: City & { onMouseEnter?: (city: City) => void }) => {
-  const { city, country, iso2, onMouseEnter } = props;
+const CityCard = (
+  props: City & {
+    onMouseEnter?: (city: City) => void;
+    onClick?: (city: City) => void;
+  },
+) => {
+  const { city, country, iso2, onMouseEnter, onClick } = props;
   const { image } = useCityImage(props);
   const setSelectedCityInfo = useSetRecoilState(selectedCityInfoAtom);
 
@@ -20,7 +25,15 @@ const CityCard = (props: City & { onMouseEnter?: (city: City) => void }) => {
         if (!onMouseEnter) return;
         let city = { ...props };
         delete city.onMouseEnter;
+        delete city.onClick;
         onMouseEnter(city as City);
+      }}
+      onClick={() => {
+        if (!onClick) return;
+        let city = { ...props };
+        delete city.onMouseEnter;
+        delete city.onClick;
+        onClick(city);
       }}
     >
       <FlagIcon iso2={iso2} />

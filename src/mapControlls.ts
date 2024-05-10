@@ -6,6 +6,7 @@ export class MapControlls {
   static temporaryMarker: L.Marker | null;
   static temporaryPolyline: L.Polyline;
   static markers: L.Marker[] = [];
+  static polylines: L.Polyline[] = [];
 
   static init(map: L.Map) {
     MapControlls.map = map;
@@ -34,6 +35,23 @@ export class MapControlls {
     });
     polyline.addTo(map);
     MapControlls.temporaryPolyline = polyline;
+  }
+
+  static addPermanentPolyline(points: L.LatLngExpression[]) {
+    const map = MapControlls.map;
+    if (!map) return;
+
+    const temporaryPolyline = MapControlls.temporaryPolyline;
+    if (temporaryPolyline) map.removeLayer(temporaryPolyline);
+
+    const polyline = new L.Polyline(points, {
+      color: 'black',
+      weight: 3,
+      opacity: 0.3,
+      smoothFactor: 1,
+    });
+    polyline.addTo(map);
+    MapControlls.polylines.push(polyline);
   }
 
   // Markers

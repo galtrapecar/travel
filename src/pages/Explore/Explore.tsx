@@ -17,12 +17,14 @@ import CityInfo from '../../components/CityInfo/CityInfo';
 import _ from 'lodash';
 import { MapControlls } from '../../mapControlls';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
+import useBuildTrip from './hooks/useBuildTrip';
 
 const Explore = () => {
+  const { addCity } = useBuildTrip();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [modalOpen, setModalOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
-  const currentCity = useRecoilValue(currentCityAtom);
+  const [currentCity, setCurrentCity] = useRecoilState(currentCityAtom);
   const selectedCityInfo = useRecoilValue(selectedCityInfoAtom);
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
 
@@ -79,6 +81,22 @@ const Explore = () => {
     ]);
   };
 
+  const onCitySelect = (city: City) => {
+    if (!city || !city.lat || !city.lng) return;
+    setCurrentCity(city);
+    MapControlls.addPermanentMarker(
+      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+    );
+    if (!currentCity) return;
+    MapControlls.addPermanentPolyline([
+      [currentCity.lat, currentCity.lng],
+      [city.lat, city.lng],
+    ]);
+    addCity(city);
+    setDrawerOpen(false);
+    setModalOpen(true);
+  };
+
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
@@ -96,6 +114,7 @@ const Explore = () => {
                   key={(city.city || '') + (city.country || index)}
                   {...city}
                   onMouseEnter={onCityCardHover}
+                  onClick={onCitySelect}
                 />
               ))}
         </div>

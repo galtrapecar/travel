@@ -42,9 +42,14 @@ export type Transport = {
   type: TransportType,
 };
 
+export type Stay = {
+  duration: number,
+};
+
 export type Location = {
   city?: City;
   transport?: Transport;
+  stay?: Stay;
   startLocation?: boolean;
 }
 

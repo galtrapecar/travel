@@ -1,5 +1,7 @@
+import { ReactComponent as BedIcon } from './Bed.svg';
 import { ReactComponent as CarIcon } from './Car.svg';
 import { ReactComponent as ChevronLeftIcon } from './ChevronLeft.svg';
+import { ReactComponent as ClockIcon } from './Clock.svg';
 import { ReactComponent as DuckDuckGoLogoIcon } from './DuckDuckGo.svg';
 import { ReactComponent as GoogleLogoIcon } from './Google.svg';
 import { ReactComponent as InfoIcon } from './Info.svg';
@@ -11,8 +13,10 @@ import { ReactComponent as PlaneIcon } from './Plane.svg';
 import { ReactComponent as TrainIcon } from './Train.svg';
 
 export const Icons = {
+  BedIcon,
   CarIcon,
   ChevronLeftIcon,
+  ClockIcon,
   DuckDuckGoLogoIcon,
   GoogleLogoIcon,
   InfoIcon,

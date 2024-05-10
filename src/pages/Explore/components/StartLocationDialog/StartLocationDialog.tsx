@@ -30,9 +30,7 @@ const StartLocationDialog = () => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     if (!city || !city.lat || !city.lng) return;
-    MapControlls.addTemporaryMarker(L.marker([city.lat, city.lng], {
-      icon: CustomMarker(city),
-    }));
+    MapControlls.addTemporaryMarker(L.marker([city.lat, city.lng], {}));
     MapControlls.map.flyTo([city.lat, city.lng], 10, {
       animate: true,
       duration: 3,
