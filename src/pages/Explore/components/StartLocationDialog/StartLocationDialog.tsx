@@ -19,18 +19,20 @@ const StartLocationDialog = () => {
   const { cities } = useSearchCity(query);
   const { addLocation } = useBuildTrip();
 
-  const getMyLocation = () => {
-    const geolocation = navigator.geolocation;
-    geolocation.getCurrentPosition((position) => {
-      console.log(position);
-    });
-  };
+  // const getMyLocation = () => {
+  //   const geolocation = navigator.geolocation;
+  //   geolocation.getCurrentPosition((position) => {
+  //     console.log(position);
+  //   });
+  // };
 
   const onHover = (index: number) => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     if (!city || !city.lat || !city.lng) return;
-    MapControlls.addTemporaryMarker(L.marker([city.lat, city.lng], {}));
+    MapControlls.addTemporaryMarker(
+      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+    );
     MapControlls.map.flyTo([city.lat, city.lng], 10, {
       animate: true,
       duration: 3,
@@ -70,12 +72,12 @@ const StartLocationDialog = () => {
         onResultHover={onHover}
         onResultClick={onSelect}
       />
-      <div>Or</div>
+      {/* <div>Or</div>
       <IconButton
         label={'Start from my location'}
         icon={<Icons.LocationIcon width={24} height={24} />}
         onClick={() => getMyLocation()}
-      />
+      /> */}
     </div>
   );
 };

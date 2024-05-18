@@ -12,12 +12,19 @@
   }
 
   &__image {
+    position: relative;
     width: 140px;
     height: 100px;
     border-radius: 10px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    overflow: hidden;
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 140px;
+      height: 100px;
+    }
   }
 
   &__title {

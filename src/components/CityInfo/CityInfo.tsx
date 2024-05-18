@@ -63,14 +63,16 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
           </div>
         </div>
       )}
-      <div className="CityInfo__section">
-        <div className="CityInfo__section__header">Monuments</div>
-        <div className="CityInfo__section__cards">
-          {monuments.map((monument) => (
-            <MonumentCard key={monument.id} {...monument} />
-          ))}
+      {monuments?.length > 0 && (
+        <div className="CityInfo__section">
+          <div className="CityInfo__section__header">Monuments</div>
+          <div className="CityInfo__section__cards">
+            {monuments.map((monument) => (
+              <MonumentCard key={monument.id} {...monument} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

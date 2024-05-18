@@ -22,6 +22,10 @@ export const CitiesAPIUrls = {
   },
 };
 
+export const RoutesAPIUrls = {
+  getRouteUrl: () => `${API_URL}/routes`,
+};
+
 export const MonumentsAPIUrls = {
   getMonuments: (iso2: string, city?: string) => {
     const url = new URL(`${API_URL}/monuments`);
@@ -40,7 +44,11 @@ export const MonumentsAPIUrls = {
 };
 
 export const WorldHeritageSitesAPIUrls = {
-  getWorldHeritageSitesInRadius: (lat: number, lng: number, radius?: number) => {
+  getWorldHeritageSitesInRadius: (
+    lat: number,
+    lng: number,
+    radius?: number,
+  ) => {
     const url = new URL(`${API_URL}/worldHeritageSites/inRadius`);
     url.searchParams.append('lat', String(lat));
     url.searchParams.append('lng', String(lng));

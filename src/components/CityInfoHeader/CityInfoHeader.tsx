@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Icons } from '../../assets/icons';
 import ExpandableButton from '../ExpandableButton/ExpandableButton';
 import FlagIcon from '../FlagIcon/FlagIcon';
@@ -29,10 +30,15 @@ const CityInfoHeader = ({
   return (
     <div className="CityInfoHeader">
       <div className="CityInfoHeader__left">
-        <div
-          className="CityInfoHeader__image"
-          style={{ backgroundImage: `url(${image})` }}
-        />
+        <div className="CityInfoHeader__image">
+          {_.isString(image) && (
+            <img
+              src={image}
+              onError={(e) => (e.currentTarget.style.display = 'none')}
+              onLoad={(e) => (e.currentTarget.style.display = 'initial')}
+            />
+          )}
+        </div>
         <div>
           <div className="CityInfoHeader__title">{city}</div>
           <div className="CityInfoHeader__subtitleWrapper">

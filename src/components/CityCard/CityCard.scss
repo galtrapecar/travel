@@ -12,6 +12,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   cursor: pointer;
+  overflow: hidden;
   &::after {
     content: '';
     position: absolute;
@@ -27,6 +28,15 @@
     );
     border-radius: 10px;
     transition: all 0.3s;
+  }
+  img{
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   width: 402px;
+   height: 255px;
+   transform: translate(-50%, -50%);
+   z-index: 0 !important;
   }
   & > * {
     z-index: 1;
@@ -45,6 +55,19 @@
       font-size: 16px;
       font-weight: normal;
       color: $color-white;
+    }
+  }
+  &__route {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    gap: 10px;
+    & > div {
+      color: $color-white;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
   }
   &:hover {

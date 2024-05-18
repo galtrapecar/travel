@@ -9,10 +9,11 @@ import TransportDialog from '../TransportDialog/TransportDialog';
 import { Icons } from '../../../../assets/icons';
 import React from 'react';
 import StayDialog from '../StayDialog/StayDialog';
+import IconButton from '../../../../components/IconButton/IconButton';
 
 const TripBuilderDialog = () => {
   const startLocation = useRecoilValue(startLocationAtom);
-  const { trip, addTransport } = useBuildTrip();
+  const { trip, addTransport, addLocation } = useBuildTrip();
 
   const onSelectTransport = (type: TransportType) => {
     addTransport(type);
@@ -64,7 +65,7 @@ const TripBuilderDialog = () => {
               {_.isObject(location.city) && (
                 <>
                   <div className="TripBuilderDialog__destination">
-                    {/* Trip details */}
+                    <div>{``}</div>
                     <div />
                     <CityPill darker {...location.city} />
                   </div>
@@ -76,10 +77,25 @@ const TripBuilderDialog = () => {
               {_.isObject(location.city) && !_.isObject(location.stay) && (
                 <StayDialog />
               )}
+              {_.isObject(location.city) && _.isObject(location.stay) && (
+                <>
+                  <div className="TripBuilderDialog__destination">
+                    <div>{`${location.stay.duration} ${location.stay.duration === 1 ? 'day' : 'days'}`}</div>
+                    <Icons.ClockIcon width={24} height={24} />
+                  </div>
+                </>
+              )}
             </React.Fragment>
           );
         }
       })}
+      {_.isObject(trip.at(-1)?.stay) && (
+        <IconButton
+          className="TripBuilderDialog__moreButton"
+          onClick={() => addLocation({})}
+          label={'Add more stops'}
+        />
+      )}
     </div>
   );
 };

@@ -26,4 +26,8 @@
       color: $color-mono100;
     }
   }
+  &__moreButton {
+    justify-content: center;
+    background-color: transparent;
+  }
 }

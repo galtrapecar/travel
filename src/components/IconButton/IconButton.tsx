@@ -4,7 +4,7 @@ type IconButtonProps = {
   className?: string;
   icon?: JSX.Element;
   label?: JSX.Element | string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   small?: boolean;
 };
 

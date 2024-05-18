@@ -9,6 +9,7 @@ import {
   cityDrawerOpenAtom,
   currentCityAtom,
   selectedCityInfoAtom,
+  startLocationAtom,
 } from './state';
 import useGetCitiesInRadius from './hooks/useGetCitiesInRadius';
 import CityCard from '../../components/CityCard/CityCard';
@@ -25,8 +26,10 @@ const Explore = () => {
   const [modalOpen, setModalOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
   const [currentCity, setCurrentCity] = useRecoilState(currentCityAtom);
-  const selectedCityInfo = useRecoilValue(selectedCityInfoAtom);
+  const [selectedCityInfo, setSelectedCityInfo] =
+    useRecoilState(selectedCityInfoAtom);
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
+  const startLocation = useRecoilValue(startLocationAtom);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -115,6 +118,8 @@ const Explore = () => {
                   {...city}
                   onMouseEnter={onCityCardHover}
                   onClick={onCitySelect}
+                  onInfoClick={setSelectedCityInfo}
+                  startLocation={startLocation}
                 />
               ))}
         </div>

@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { tripAtom } from '../state';
-import { City, Location, TransportType } from '../../../types';
+import { City, Location, Stay, TransportType } from '../../../types';
 import _ from 'lodash';
 
 const useBuildTrip = () => {
@@ -27,6 +27,17 @@ const useBuildTrip = () => {
     setTrip(updatedTrip);
   };
 
+  const addStay = (stay: Stay) => {
+    const updatedTrip = [
+      ...trip.slice(0, trip.length - 1),
+      {
+        ...trip.at(-1),
+        stay,
+      },
+    ];
+    setTrip(updatedTrip);
+  };
+
   const addLocation = (location: Location) => {
     const updatedTrip = [...(trip || []), location];
     setTrip(updatedTrip);
@@ -48,6 +59,7 @@ const useBuildTrip = () => {
     trip,
     addTransport,
     addCity,
+    addStay,
     addLocation,
     removeLocation,
   };

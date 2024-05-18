@@ -7,8 +7,14 @@ export type City = {
   iso2?: string;
   iso3?: string;
   population?: number;
-  id?: number;
+  id: number;
+  image_url: string | null;
 };
+
+export type Route = {
+  distance?: number;
+  duration?: number;
+}
 
 export type Monument = {
   id: string;
