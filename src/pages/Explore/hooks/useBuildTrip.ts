@@ -1,32 +1,45 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { startLocationAtom, tripAtom } from '../state';
-import { City, Location } from '../../../types';
-import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { tripAtom } from '../state';
+import { City, Location, Stay, TransportType } from '../../../types';
 import _ from 'lodash';
 
 const useBuildTrip = () => {
-  const startLocation = useRecoilValue(startLocationAtom);
   const [trip, setTrip] = useRecoilState(tripAtom);
 
-  useEffect(() => {
-    if (!_.isObject(startLocation)) {
-      setTrip([]);
-    } else {
-      setStartLocation(startLocation);
-    }
-  }, [startLocation]);
-
-  const setStartLocation = (city: City) => {
-    setTrip([
-      {
-        city: city,
-        startLocation: true,
+  const addTransport = (type: TransportType) => {
+    const location = {
+      transport: {
+        type,
       },
-    ]);
+    };
+    const updatedTrip = [...trip.slice(0, trip.length - 1), location];
+    setTrip(updatedTrip);
   };
 
-  const addLocation = () => {
-    const updatedTrip = [...(trip || [])];
+  const addCity = (city: City) => {
+    const updatedTrip = [
+      ...trip.slice(0, trip.length - 1),
+      {
+        ...trip.at(-1),
+        city,
+      },
+    ];
+    setTrip(updatedTrip);
+  };
+
+  const addStay = (stay: Stay) => {
+    const updatedTrip = [
+      ...trip.slice(0, trip.length - 1),
+      {
+        ...trip.at(-1),
+        stay,
+      },
+    ];
+    setTrip(updatedTrip);
+  };
+
+  const addLocation = (location: Location) => {
+    const updatedTrip = [...(trip || []), location];
     setTrip(updatedTrip);
   };
 
@@ -35,8 +48,8 @@ const useBuildTrip = () => {
     const updatedTrip = [
       ...(trip.filter(
         (location) =>
-          !(location.city.city === location.city.city) &&
-          !(location.city.country === location.city.country),
+          !(location.city?.city === location.city?.city) &&
+          !(location.city?.country === location.city?.country),
       ) || []),
     ];
     setTrip(updatedTrip);
@@ -44,6 +57,9 @@ const useBuildTrip = () => {
 
   return {
     trip,
+    addTransport,
+    addCity,
+    addStay,
     addLocation,
     removeLocation,
   };

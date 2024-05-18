@@ -1,0 +1,29 @@
+.ExpandableButton {
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
+  padding: 9px;
+  overflow: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background-color: $color-mono500;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__label {
+    color: $color-white;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  &:hover {
+    max-width: 200px;
+  }
+}

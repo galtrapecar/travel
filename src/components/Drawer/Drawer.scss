@@ -1,0 +1,22 @@
+.Drawer {
+  position: absolute;
+  z-index: 99998;
+  top: 0;
+  max-height: 100vh;
+  overflow: scroll;
+  right: -100%;
+  width: 450px;
+  height: 100%;
+  background-color: $color-mono700;
+  padding: 24px;
+  padding-bottom: 32px;
+  transition: all 0.6s;
+
+  .IconButtonSmall {
+    margin-left: auto;
+  }
+
+  &.open {
+    right: 0;
+  }
+}

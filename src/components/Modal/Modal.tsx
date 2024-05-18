@@ -1,15 +1,60 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Portal } from 'react-portal';
+import IconButton from '../IconButton/IconButton';
+import { Icons } from '../../assets/icons';
 
 type ModalProps = {
   children: ReactNode;
+  open: boolean;
+  setModalOpen: (state: boolean) => void;
 };
 
-const Modal = ({ children }: ModalProps) => {
+type OpenModalButtonProps = {
+  open: boolean;
+  onOpen: () => void;
+};
+
+const OpenModalButton = ({ open, onOpen }: OpenModalButtonProps) => {
   return (
-    <Portal>
-      <div className="Modal">{children}</div>
-    </Portal>
+    <div
+      className={`OpenModalButton ${open ? 'open' : 'closed'}`}
+      onClick={onOpen}
+    >
+      <IconButton
+        className="OpenModalButton__button"
+        small
+        icon={
+          <Icons.ChevronLeftIcon
+            width={24}
+            height={24}
+            style={{ transform: 'rotate(180deg)' }}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+const Modal = ({ children, open, setModalOpen }: ModalProps) => {
+  return (
+    <>
+      <Portal>
+        <div className={`Modal ${open ? 'open' : 'closed'}`}>
+          <IconButton
+            className="Explore__closeModalButton"
+            small
+            icon={<Icons.ChevronLeftIcon width={24} height={24} />}
+            onClick={() => {
+              setModalOpen(false);
+            }}
+          />
+          {children}
+        </div>
+      </Portal>
+      <Portal>
+        <OpenModalButton open={!open} onOpen={() => setModalOpen(true)} />
+      </Portal>
+    </>
   );
 };
 

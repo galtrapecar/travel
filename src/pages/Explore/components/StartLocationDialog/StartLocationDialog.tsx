@@ -6,41 +6,51 @@ import useSearchCity from '../../hooks/useSearchCity';
 import _ from 'lodash';
 import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
 import L from 'leaflet';
-import window from '../../../../window';
-import { useRecoilState } from 'recoil';
-import { startLocationAtom } from '../../state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { currentCityAtom, startLocationAtom } from '../../state';
 import useBuildTrip from '../../hooks/useBuildTrip';
+import { MapControlls } from '../../../../mapControlls';
+import CustomMarker from '../../../../components/CustomMarker/CustomMarker';
 
 const StartLocationDialog = () => {
-  const markerRef = useRef<L.Marker | undefined>();
   const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
+  const setCurrentCity = useSetRecoilState(currentCityAtom);
   const [query, setQuery] = useState('');
   const { cities } = useSearchCity(query);
+  const { addLocation } = useBuildTrip();
 
-  const getMyLocation = () => {
-    const geolocation = navigator.geolocation;
-    geolocation.getCurrentPosition((position) => {
-      console.log(position);
-    });
-  };
+  // const getMyLocation = () => {
+  //   const geolocation = navigator.geolocation;
+  //   geolocation.getCurrentPosition((position) => {
+  //     console.log(position);
+  //   });
+  // };
 
   const onHover = (index: number) => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     if (!city || !city.lat || !city.lng) return;
-    const map = window.map as L.Map;
-    if (!map) return;
-    if (markerRef.current) {
-      map.removeLayer(markerRef.current);
-    }
-    markerRef.current = L.marker([city.lat, city.lng], {}).addTo(map);
-    map.flyTo([city.lat, city.lng], 13, { animate: true, duration: 3 });
+    MapControlls.addTemporaryMarker(
+      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+    );
+    MapControlls.map.flyTo([city.lat, city.lng], 10, {
+      animate: true,
+      duration: 3,
+    });
   };
 
   const onSelect = (index: number) => {
     const filtered = cities.filter((city) => _.isString(city.city));
     const city = filtered.at(index);
     setStartLocation(city || null);
+    setCurrentCity(city || null);
+    if (!city) return;
+    MapControlls.addPermanentMarker(
+      L.marker([city.lat, city.lng], {
+        icon: CustomMarker(city),
+      }),
+    );
+    addLocation({});
   };
 
   if (_.isObject(startLocation)) {
@@ -62,12 +72,12 @@ const StartLocationDialog = () => {
         onResultHover={onHover}
         onResultClick={onSelect}
       />
-      <div>Or</div>
+      {/* <div>Or</div>
       <IconButton
         label={'Start from my location'}
         icon={<Icons.LocationIcon width={24} height={24} />}
         onClick={() => getMyLocation()}
-      />
+      /> */}
     </div>
   );
 };

@@ -1,0 +1,91 @@
+.CityCard {
+  position: relative;
+  min-width: 402px;
+  min-height: 255px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: $color-mono500;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 40%
+    );
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+  img{
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   width: 402px;
+   height: 255px;
+   transform: translate(-50%, -50%);
+   z-index: 0 !important;
+  }
+  & > * {
+    z-index: 1;
+    transition: all 0.1s;
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &__name {
+      font-size: 24px;
+      font-weight: bold;
+      color: $color-white;
+    }
+    &__country {
+      font-size: 16px;
+      font-weight: normal;
+      color: $color-white;
+    }
+  }
+  &__route {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    gap: 10px;
+    & > div {
+      color: $color-white;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+  &:hover {
+    & > div:not(.IconButtonSmall) {
+      opacity: 0.2;
+    }
+    & > .IconButtonSmall {
+      display: initial;
+    }
+    &::after {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+  .IconButtonSmall {
+    color: $color-white;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: none;
+  }
+}
