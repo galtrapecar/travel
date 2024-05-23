@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { Icons } from '../../assets/icons';
 import ExpandableButton from '../ExpandableButton/ExpandableButton';
 import FlagIcon from '../FlagIcon/FlagIcon';
+import { searchOnDuckDuckGo, searchOnGoogle } from '../../search';
 
 type CityInfoHeaderProps = {
   city: string;
@@ -17,14 +18,11 @@ const CityInfoHeader = ({
   image,
 }: CityInfoHeaderProps) => {
   const openDuckDuckGo = () => {
-    window.open(`https://duckduckgo.com/?q=${city}%20${country}`, '_blank');
+    searchOnDuckDuckGo(`${city}%20${country}`);
   };
 
   const openGoogle = () => {
-    window.open(
-      `https://www.google.com/search?q=${city}%20${country}`,
-      '_blank',
-    );
+    searchOnGoogle(`${city}%20${country}`);
   };
 
   return (

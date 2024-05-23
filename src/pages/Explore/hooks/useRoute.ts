@@ -35,9 +35,9 @@ const useRoute = (start?: City | null, end?: City | null) => {
       body: JSON.stringify(request),
     });
     if (!response.ok) return setRoute(undefined);
-    const { route } = await response.json();
+    const route = await response.json();
     setRoute({
-      distance: toKilometers(route?.car?.distance) || 0,
+      distance: toKilometers(route?.distance) || 0,
     });
   };
 
