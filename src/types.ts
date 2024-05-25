@@ -1,5 +1,5 @@
 export type City = {
-  city?: string;
+  city: string;
   city_ascii?: string;
   lat: number;
   lng: number;
@@ -14,21 +14,27 @@ export type City = {
 export type Route = {
   distance?: number;
   duration?: number;
-}
+};
 
-export type Monument = {
+export type PointOfInterest = {
   id: string;
-  monument: string;
-  monument_ascii: string;
+  type: PointOfInterestType;
+  name: string;
+  name_ascii: string;
   lat: number;
   lng: number;
   iso2: string;
   location: string;
 };
 
-export interface WorldHeritageSite {
+export enum PointOfInterestType {
+  Monument = 'monument',
+  Windmill = 'windmill',
+}
+
+export type WorldHeritageSite = {
   id: number;
-  name: string,
+  name: string;
   category: string;
   url: string;
   image_url: string;
@@ -36,7 +42,7 @@ export interface WorldHeritageSite {
   lat: number;
   lng: number;
   description: string;
-}
+};
 
 export enum TransportType {
   Plane = 'tlane',
@@ -45,11 +51,11 @@ export enum TransportType {
 }
 
 export type Transport = {
-  type: TransportType,
+  type: TransportType;
 };
 
 export type Stay = {
-  duration: number,
+  duration: number;
 };
 
 export type Location = {
@@ -57,6 +63,6 @@ export type Location = {
   transport?: Transport;
   stay?: Stay;
   startLocation?: boolean;
-}
+};
 
 export type Trip = Location[];

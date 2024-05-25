@@ -10,7 +10,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { currentCityAtom, startLocationAtom } from '../../state';
 import useBuildTrip from '../../hooks/useBuildTrip';
 import { MapControlls } from '../../../../mapControlls';
-import CustomMarker from '../../../../components/CustomMarker/CustomMarker';
+import CityMarker from '../../../../components/CityMarker/CityMarker';
 
 const StartLocationDialog = () => {
   const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
@@ -31,7 +31,7 @@ const StartLocationDialog = () => {
     const city = filtered.at(index);
     if (!city || !city.lat || !city.lng) return;
     MapControlls.addTemporaryMarker(
-      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+      L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     MapControlls.map.flyTo([city.lat, city.lng], 10, {
       animate: true,
@@ -47,11 +47,11 @@ const StartLocationDialog = () => {
     if (!city) return;
     MapControlls.addPermanentMarker(
       L.marker([city.lat, city.lng], {
-        icon: CustomMarker(city),
+        icon: CityMarker(city),
       }),
     );
     addLocation({});
-  };
+  }
 
   if (_.isObject(startLocation)) {
     return null;

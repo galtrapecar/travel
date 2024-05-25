@@ -1,29 +1,29 @@
 import { Icons } from '../../assets/icons';
 import { searchOnDuckDuckGo, searchOnGoogle } from '../../search';
-import { Monument } from '../../types';
+import { PointOfInterest } from '../../types';
 import IconButton from '../IconButton/IconButton';
-import useMonumentImage from './hooks/useMonumentImage';
+import usePoiImage from './hooks/usePoiImage';
 
-const MonumentCard = (monument: Monument) => {
-  const { image } = useMonumentImage(monument);
+const PoiCard = (poi: PointOfInterest) => {
+  const { image } = usePoiImage(poi);
 
   const openDuckDuckGo = () => {
-    searchOnDuckDuckGo(`${monument.monument}%20${monument.location}`);
+    searchOnDuckDuckGo(`${poi.name}%20${poi.location}`);
   };
 
   const openGoogle = () => {
-    searchOnGoogle(`${monument.monument}%20${monument.location}`);
+    searchOnGoogle(`${poi.name}%20${poi.location}`);
   };
 
   return (
-    <div className="MonumentCard">
+    <div className="PoiCard">
       <div
-        className="MonumentCard__image"
+        className="PoiCard__image"
         style={{ backgroundImage: `url(${image})` }}
       />
-      <div className="MonumentCard__info">
-        <div className="MonumentCard__name">{monument.monument}</div>
-        <div className="MonumentCard__buttons">
+      <div className="PoiCard__info">
+        <div className="PoiCard__name">{poi.name}</div>
+        <div className="PoiCard__buttons">
           <IconButton
             small
             icon={<Icons.DuckDuckGoLogoIcon />}
@@ -40,4 +40,4 @@ const MonumentCard = (monument: Monument) => {
   );
 };
 
-export default MonumentCard;
+export default PoiCard;

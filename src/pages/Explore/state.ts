@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { City, Trip } from '../../types';
+import { City, PointOfInterest, Trip } from '../../types';
 
 export const startLocationAtom = atom<City | null>({
   key: 'startLocation',
@@ -21,7 +21,12 @@ export const cityDrawerOpenAtom = atom<boolean>({
   default: false,
 });
 
-export const selectedCityInfoAtom = atom<City & { image?: string } | null>({
+export const selectedCityInfoAtom = atom<(City & { image?: string }) | null>({
   key: 'selectedCityInfo',
   default: null,
+});
+
+export const poisAtom = atom<{ [x: string]: PointOfInterest[] }>({
+  key: 'pois',
+  default: {},
 });

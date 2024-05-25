@@ -26,16 +26,16 @@ export const RoutesAPIUrls = {
   getRouteUrl: () => `${API_URL}/routes`,
 };
 
-export const MonumentsAPIUrls = {
-  getMonuments: (iso2: string, city?: string) => {
-    const url = new URL(`${API_URL}/monuments`);
+export const PoisAPIUrls = {
+  getPois: (iso2: string, city?: string) => {
+    const url = new URL(`${API_URL}/pois`);
     url.searchParams.append('iso2', iso2);
     if (city) url.searchParams.append('city', city);
     return url.toString();
   },
 
-  getMonumentsInRadius: (lat: number, lng: number, radius?: number) => {
-    const url = new URL(`${API_URL}/monuments/inRadius`);
+  getPoisInRadius: (lat: number, lng: number, radius?: number) => {
+    const url = new URL(`${API_URL}/pois/inRadius`);
     url.searchParams.append('lat', String(lat));
     url.searchParams.append('lng', String(lng));
     if (radius) url.searchParams.append('radius', String(radius));

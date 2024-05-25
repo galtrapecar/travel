@@ -1,5 +1,7 @@
 import L from 'leaflet';
-import { City } from './types';
+import { City, PointOfInterest } from './types';
+import CityMarker from './components/CityMarker/CityMarker';
+import PoiMarker from './components/PoiMarker/PoiMarker';
 
 export class MapControlls {
   static map: L.Map;
@@ -7,6 +9,7 @@ export class MapControlls {
   static temporaryPolyline: L.Polyline;
   static markers: L.Marker[] = [];
   static polylines: L.Polyline[] = [];
+  static poiMarkers: L.Marker[] = [];
 
   static init(map: L.Map) {
     MapControlls.map = map;
@@ -77,5 +80,29 @@ export class MapControlls {
 
     marker.addTo(map);
     MapControlls.markers.push(marker);
+  }
+
+  private static addPoiMarket(poi: PointOfInterest) {
+    const map = MapControlls.map;
+    if (!map) return;
+    console.log(poi);
+    // @ts-ignore    
+    const marker = L.marker([poi.lat, poi.lng], { icon: PoiMarker(poi) });
+    marker.addTo(map);
+    MapControlls.poiMarkers.push(marker);
+  }
+
+  // Points of interest
+  static addPointsOfInterest(pois: PointOfInterest[]) {
+    MapControlls.removePointsOfInterest();
+    pois.forEach((poi) => {
+      MapControlls.addPoiMarket(poi);
+    });
+  }
+
+  static removePointsOfInterest() {
+    const map = MapControlls.map;
+    if (!map) return;
+    MapControlls.poiMarkers.forEach((poiMarker) => map.removeLayer(poiMarker));
   }
 }

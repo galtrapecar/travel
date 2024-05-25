@@ -17,8 +17,9 @@ import { City } from '../../types';
 import CityInfo from '../../components/CityInfo/CityInfo';
 import _ from 'lodash';
 import { MapControlls } from '../../mapControlls';
-import CustomMarker from '../../components/CustomMarker/CustomMarker';
+import CityMarker from '../../components/CityMarker/CityMarker';
 import useBuildTrip from './hooks/useBuildTrip';
+import usePois from './hooks/usePois';
 
 const Explore = () => {
   const { addCity } = useBuildTrip();
@@ -29,6 +30,7 @@ const Explore = () => {
   const [selectedCityInfo, setSelectedCityInfo] =
     useRecoilState(selectedCityInfoAtom);
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
+  const { pois, fetchPois } = usePois();
   const startLocation = useRecoilValue(startLocationAtom);
 
   useEffect(() => {
@@ -75,20 +77,24 @@ const Explore = () => {
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     MapControlls.addTemporaryMarker(
-      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+      L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
     MapControlls.addTemporaryPolyline([
       [currentCity.lat, currentCity.lng],
       [city.lat, city.lng],
     ]);
+    fetchPois(city.lat, city.lng).then((pois) => {
+      console.log(pois);
+      MapControlls.addPointsOfInterest(pois);
+    });
   };
 
   const onCitySelect = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     setCurrentCity(city);
     MapControlls.addPermanentMarker(
-      L.marker([city.lat, city.lng], { icon: CustomMarker(city) }),
+      L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
     MapControlls.addPermanentPolyline([

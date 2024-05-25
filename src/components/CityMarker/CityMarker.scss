@@ -1,0 +1,35 @@
+.CityMarker {
+  display: flex;
+  justify-content: center;
+  &__pin {
+    position: absolute;
+    bottom: 5px;
+    min-width: 50px;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    background-color: $color-mono700;
+    border-radius: 4px;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateY(100%) translateX(-50%) rotate(45deg);
+      width: 10px;
+      height: 10px;
+      background-color: $color-mono700;
+    }
+  }
+
+  &__title {
+    padding: 10px;
+    border-radius: 4px;
+    color: $color-mono200;
+    background-color: $color-mono700;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}

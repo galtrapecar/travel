@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Monument } from '../../../types';
+import { PointOfInterest } from '../../../types';
 import { ImagesAPIUrls } from '../../../urls';
 import { DuckDuckGoImage } from 'duckduckgo-images-api';
 
-const useMonumentImage = (monument: Monument) => {
+const usePoiImage = (poi: PointOfInterest) => {
   const [image, setImage] = useState<string>();
 
   const fetchImage = async () => {
-    if (!monument || !monument.monument) return;
-    const url = ImagesAPIUrls.getImages(`${monument.monument} ${monument.iso2}`);
+    if (!poi || !poi.name) return;
+    const url = ImagesAPIUrls.getImages(`${poi.name} ${poi.iso2}`);
     try {
       const response = await fetch(url);
       const images: DuckDuckGoImage[] = await response.json();
@@ -28,4 +28,4 @@ const useMonumentImage = (monument: Monument) => {
   };
 };
 
-export default useMonumentImage;
+export default usePoiImage;

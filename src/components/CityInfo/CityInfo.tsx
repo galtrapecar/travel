@@ -6,12 +6,12 @@ import IconButton from '../IconButton/IconButton';
 import _ from 'lodash';
 import { useRef, useState } from 'react';
 import cx from 'classnames';
-import useMonuments from '../../pages/Explore/hooks/useMonuments';
 import { City } from '../../types';
-import MonumentCard from '../MonumentCard/MonumentCard';
 import useWorldHeritageSites from '../../pages/Explore/hooks/useWorldHeritageSites';
 import WorldHeritageSiteCard from '../WorldHeritageSiteCard/WorldHeritageSiteCard';
 import { Images } from '../../assets/img';
+import usePois from '../../pages/Explore/hooks/usePois';
+import PoiCard from '../PoiCard/PoiCard';
 
 type CityInfoProps = City & { image?: string };
 
@@ -19,7 +19,7 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const setSelectedCityInfo = useSetRecoilState(selectedCityInfoAtom);
   const [isClosing, setIsClosing] = useState(false);
-  const { monuments } = useMonuments(lat, lng);
+  const { pois } = usePois(lat, lng);
   const { worldHeritageSites } = useWorldHeritageSites(lat, lng);
 
   const onClose = () => {
@@ -63,12 +63,12 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
           </div>
         </div>
       )}
-      {monuments?.length > 0 && (
+      {pois?.length > 0 && (
         <div className="CityInfo__section">
-          <div className="CityInfo__section__header">Monuments</div>
+          <div className="CityInfo__section__header">Points of interest</div>
           <div className="CityInfo__section__cards">
-            {monuments.map((monument) => (
-              <MonumentCard key={monument.id} {...monument} />
+            {pois.map((poi) => (
+              <PoiCard key={poi.id} {...poi} />
             ))}
           </div>
         </div>

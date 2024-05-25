@@ -34,11 +34,12 @@ html {
 @import './components/CityCard/CityCard.scss';
 @import './components/OpenLinkButton/OpenLinkButton.scss';
 @import './components/WorldHeritageSiteCard/WorldHeritageSiteCard.scss';
-@import './components/MonumentCard/MonumentCard.scss';
+@import './components/PoiCard/PoiCard.scss';
 @import './components/CityInfo/CityInfo.scss';
 @import './components/CityInfoHeader/CityInfoHeader.scss';
 @import './components/ExpandableButton/ExpandableButton.scss';
-@import './components/CustomMarker/CustomMarker.scss';
+@import './components/CityMarker/CityMarker.scss';
+@import './components/PoiMarker/PoiMarker.scss';
 @import './pages/Explore/components/TransportDialog/TransportDialog.scss';
 @import './pages/Explore/components/StartLocationDialog/StartLocationDialog.scss';
 @import './pages/Explore/components/TripBuilderDialog/TripBuilderDialog.scss';
