@@ -29,7 +29,7 @@ const usePois = (lat?: number, lng?: number) => {
       newPoisMap[indexString] = fetchedPois as PointOfInterest[];
       return newPoisMap;
     });
-    return [];
+    return fetchedPois;
   };
 
   return {

@@ -85,7 +85,6 @@ const Explore = () => {
       [city.lat, city.lng],
     ]);
     fetchPois(city.lat, city.lng).then((pois) => {
-      console.log(pois);
       MapControlls.addPointsOfInterest(pois);
     });
   };

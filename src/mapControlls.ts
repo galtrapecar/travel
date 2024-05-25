@@ -13,6 +13,14 @@ export class MapControlls {
 
   static init(map: L.Map) {
     MapControlls.map = map;
+    map.on('zoomend', (e) => {
+      const zoom = map.getZoom();
+      if (zoom >= 15) {
+        MapControlls.showPoiMarkers();
+      } else {
+        MapControlls.hidePoiMarkers();
+      }
+    });
   }
 
   static flyToCity(city: City | null) {
@@ -82,25 +90,40 @@ export class MapControlls {
     MapControlls.markers.push(marker);
   }
 
-  private static addPoiMarket(poi: PointOfInterest) {
+  // Points of interest
+  static addPointsOfInterest(pois: PointOfInterest[]) {
+    console.log("adding poi markers");
+    
+    MapControlls.removePointsOfInterest();
+    pois.forEach((poi) => {
+      MapControlls.addPoiMarker(poi);
+    });
+    if (this.map.getZoom() >= 15) MapControlls.showPoiMarkers();
+  }
+
+  private static addPoiMarker(poi: PointOfInterest) {
     const map = MapControlls.map;
     if (!map) return;
-    console.log(poi);
-    // @ts-ignore    
     const marker = L.marker([poi.lat, poi.lng], { icon: PoiMarker(poi) });
-    marker.addTo(map);
     MapControlls.poiMarkers.push(marker);
   }
 
-  // Points of interest
-  static addPointsOfInterest(pois: PointOfInterest[]) {
-    MapControlls.removePointsOfInterest();
-    pois.forEach((poi) => {
-      MapControlls.addPoiMarket(poi);
+  static removePointsOfInterest() {
+    const map = MapControlls.map;
+    if (!map) return;
+    MapControlls.poiMarkers.forEach((poiMarker) => map.removeLayer(poiMarker));
+    MapControlls.poiMarkers = [];
+  }
+
+  private static showPoiMarkers() {
+    const map = MapControlls.map;
+    if (!map) return;
+    MapControlls.poiMarkers.forEach((marker) => {
+      marker.addTo(map);
     });
   }
 
-  static removePointsOfInterest() {
+  private static hidePoiMarkers() {
     const map = MapControlls.map;
     if (!map) return;
     MapControlls.poiMarkers.forEach((poiMarker) => map.removeLayer(poiMarker));
