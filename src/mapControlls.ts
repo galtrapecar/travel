@@ -92,8 +92,6 @@ export class MapControlls {
 
   // Points of interest
   static addPointsOfInterest(pois: PointOfInterest[]) {
-    console.log("adding poi markers");
-    
     MapControlls.removePointsOfInterest();
     pois.forEach((poi) => {
       MapControlls.addPoiMarker(poi);

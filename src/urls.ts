@@ -7,6 +7,13 @@ export const CitiesAPIUrls = {
     return url.toString();
   },
 
+  getClosestCityUrl: (lat: number, lng: number) => {
+    const url = new URL(`${API_URL}/cities/closest`);
+    url.searchParams.append('lat', String(lat));
+    url.searchParams.append('lng', String(lng));
+    return url.toString();
+  },
+
   getCitiesInRadiusUrl: (
     lat: number,
     lng: number,

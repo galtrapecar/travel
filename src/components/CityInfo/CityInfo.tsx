@@ -6,7 +6,7 @@ import IconButton from '../IconButton/IconButton';
 import _ from 'lodash';
 import { useRef, useState } from 'react';
 import cx from 'classnames';
-import { City } from '../../types';
+import { City, PointOfInterestType } from '../../types';
 import useWorldHeritageSites from '../../pages/Explore/hooks/useWorldHeritageSites';
 import WorldHeritageSiteCard from '../WorldHeritageSiteCard/WorldHeritageSiteCard';
 import { Images } from '../../assets/img';
@@ -31,6 +31,33 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
     } else {
       setSelectedCityInfo(null);
     }
+  };
+
+  const getPoiTypes = () => {    
+    return pois.reduce((types, poi) => {
+      if (!types.find((type) => type === poi.type)) {
+        const newTypes = [...types];
+        newTypes.push(poi.type);
+        return newTypes;
+      }
+      return types;
+    }, [] as PointOfInterestType[]);
+  };
+
+  const poiTypeTitleMap = {
+    [PointOfInterestType.Bridge]: 'Bridges',
+    [PointOfInterestType.Castle]: 'Castles',
+    [PointOfInterestType.Church]: 'Churches',
+    [PointOfInterestType.HistoricalSite]: 'Historical sites',
+    [PointOfInterestType.Monument]: 'Monuments',
+    [PointOfInterestType.Mosque]: 'Mosques',
+    [PointOfInterestType.Museum]: 'Museums',
+    [PointOfInterestType.Palace]: 'Palaces',
+    [PointOfInterestType.PieceOfArt]: 'Pieces of art',
+    [PointOfInterestType.Pyramid]: 'Pyramids',
+    [PointOfInterestType.ReligiousSite]: 'Religious sites',
+    [PointOfInterestType.Tower]: 'Towers',
+    [PointOfInterestType.Windmill]: 'Windmills',
   };
 
   if (!city || !country || !iso2) return null;
@@ -63,16 +90,22 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
           </div>
         </div>
       )}
-      {pois?.length > 0 && (
-        <div className="CityInfo__section">
-          <div className="CityInfo__section__header">Points of interest</div>
-          <div className="CityInfo__section__cards">
-            {pois.map((poi) => (
-              <PoiCard key={poi.id} {...poi} />
-            ))}
+      {getPoiTypes().map((poiType) => {
+        return (
+          <div className="CityInfo__section">
+            <div className="CityInfo__section__header">
+              {poiTypeTitleMap[poiType]}
+            </div>
+            <div className="CityInfo__section__cards">
+              {pois
+                .filter((poi) => poi.type === poiType)
+                .map((poi) => (
+                  <PoiCard key={poi.id} {...poi} />
+                ))}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 };

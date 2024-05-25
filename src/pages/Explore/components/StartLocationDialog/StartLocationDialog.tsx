@@ -11,6 +11,7 @@ import { currentCityAtom, startLocationAtom } from '../../state';
 import useBuildTrip from '../../hooks/useBuildTrip';
 import { MapControlls } from '../../../../mapControlls';
 import CityMarker from '../../../../components/CityMarker/CityMarker';
+import { CitiesAPIUrls } from '../../../../urls';
 
 const StartLocationDialog = () => {
   const [startLocation, setStartLocation] = useRecoilState(startLocationAtom);
@@ -19,12 +20,29 @@ const StartLocationDialog = () => {
   const { cities } = useSearchCity(query);
   const { addLocation } = useBuildTrip();
 
-  // const getMyLocation = () => {
-  //   const geolocation = navigator.geolocation;
-  //   geolocation.getCurrentPosition((position) => {
-  //     console.log(position);
-  //   });
-  // };
+  const getMyLocation = () => {
+    const geolocation = navigator.geolocation;
+    geolocation.getCurrentPosition(async (position) => {
+      const url = CitiesAPIUrls.getClosestCityUrl(
+        position.coords.latitude,
+        position.coords.longitude,
+      );
+      try {
+        const response = await fetch(url);
+        if (!response.ok) return;
+        const city = await response.json();
+        setStartLocation(city || null);
+        setCurrentCity(city || null);
+        if (!city) return;
+        MapControlls.addPermanentMarker(
+          L.marker([city.lat, city.lng], {
+            icon: CityMarker(city),
+          }),
+        );
+        addLocation({});
+      } catch (error) {}
+    });
+  };
 
   const onHover = (index: number) => {
     const filtered = cities.filter((city) => _.isString(city.city));
@@ -51,7 +69,7 @@ const StartLocationDialog = () => {
       }),
     );
     addLocation({});
-  }
+  };
 
   if (_.isObject(startLocation)) {
     return null;
@@ -72,12 +90,12 @@ const StartLocationDialog = () => {
         onResultHover={onHover}
         onResultClick={onSelect}
       />
-      {/* <div>Or</div>
+      <div>Or</div>
       <IconButton
         label={'Start from my location'}
         icon={<Icons.LocationIcon width={24} height={24} />}
         onClick={() => getMyLocation()}
-      /> */}
+      />
     </div>
   );
 };

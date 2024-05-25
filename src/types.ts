@@ -28,7 +28,18 @@ export type PointOfInterest = {
 };
 
 export enum PointOfInterestType {
+  Bridge = 'bridge',
+  Castle = 'castle',
+  Church = 'church',
+  HistoricalSite = 'historical_site',
   Monument = 'monument',
+  Mosque = 'mosque',
+  Museum = 'museum',
+  Palace = 'palace',
+  PieceOfArt = 'piece_of_art',
+  Pyramid = 'pyramid',
+  ReligiousSite = 'religious_site',
+  Tower = 'tower',
   Windmill = 'windmill',
 }
 
