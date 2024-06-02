@@ -45,9 +45,8 @@ const StartLocationDialog = () => {
   };
 
   const onHover = (index: number) => {
-    const filtered = cities.filter((city) => _.isString(city.city));
-    const city = filtered.at(index);
-    if (!city || !city.lat || !city.lng) return;
+    const city = cities.at(index);
+    if (!city) return;
     MapControlls.addTemporaryMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );

@@ -20,17 +20,22 @@ import { MapControlls } from '../../mapControlls';
 import CityMarker from '../../components/CityMarker/CityMarker';
 import useBuildTrip from './hooks/useBuildTrip';
 import usePois from './hooks/usePois';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import useSearchCity from './hooks/useSearchCity';
+import FlagIcon from '../../components/FlagIcon/FlagIcon';
 
 const Explore = () => {
-  const { addCity } = useBuildTrip();
+  const { addCity, trip } = useBuildTrip();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [modalOpen, setModalOpen] = useState(true);
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
+  const [cityQuery, setCityQuery] = useState('');
+  const { cities } = useSearchCity(cityQuery);
   const [currentCity, setCurrentCity] = useRecoilState(currentCityAtom);
   const [selectedCityInfo, setSelectedCityInfo] =
     useRecoilState(selectedCityInfoAtom);
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
-  const { pois, fetchPois } = usePois();
+  const { fetchPois } = usePois();
   const startLocation = useRecoilValue(startLocationAtom);
 
   useEffect(() => {
@@ -76,6 +81,7 @@ const Explore = () => {
 
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
+    if (_.isString(trip.at(-1)?.city?.city)) return;
     MapControlls.addTemporaryMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
@@ -105,6 +111,26 @@ const Explore = () => {
     setModalOpen(true);
   };
 
+  const onCitySearchResultHover = (index: number) => {
+    const city = cities.at(index);
+    if (!city) return;
+    MapControlls.addTemporaryMarker(
+      L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
+    );
+    if (!currentCity) return;
+    MapControlls.addTemporaryPolyline([
+      [currentCity.lat, currentCity.lng],
+      [city.lat, city.lng],
+    ]);
+  };
+
+  const onCitySearchResultSelect = (index: number) => {
+    const city = cities.at(index);
+    if (!city) return;
+    onCitySelect(city);
+    setCityQuery('');
+  };
+
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
@@ -113,6 +139,16 @@ const Explore = () => {
         <TripBuilderDialog />
       </Modal>
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <SearchBar
+          placeholder="Search"
+          onInput={(e) => setCityQuery(e.target.value)}
+          results={cities.map((city) => ({
+            label: city.city!,
+            icon: <FlagIcon iso2={city.iso2} />,
+          }))}
+          onResultHover={onCitySearchResultHover}
+          onResultClick={onCitySearchResultSelect}
+        />
         <div className="Explore__cityCards">
           {citiesInRadius &&
             citiesInRadius
