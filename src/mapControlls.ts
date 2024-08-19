@@ -1,6 +1,5 @@
 import L from 'leaflet';
 import { City, PointOfInterest } from './types';
-import CityMarker from './components/CityMarker/CityMarker';
 import PoiMarker from './components/PoiMarker/PoiMarker';
 
 export class MapControlls {

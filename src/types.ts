@@ -77,3 +77,10 @@ export type Location = {
 };
 
 export type Trip = Location[];
+
+// OSRM
+
+export type OSRMQuery = {
+  code: 'Ok';
+  routes: { distance: number; duration: number; geometry: string }[];
+};

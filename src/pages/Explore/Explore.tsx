@@ -23,6 +23,8 @@ import usePois from './hooks/usePois';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchCity from './hooks/useSearchCity';
 import FlagIcon from '../../components/FlagIcon/FlagIcon';
+import { OSRM_API_URL } from '../../config';
+import { decode } from '@googlemaps/polyline-codec';
 
 const Explore = () => {
   const { addCity, trip } = useBuildTrip();
@@ -95,20 +97,36 @@ const Explore = () => {
     });
   };
 
-  const onCitySelect = (city: City) => {
+  const onCitySelect = async (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     setCurrentCity(city);
     MapControlls.addPermanentMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
-    MapControlls.addPermanentPolyline([
-      [currentCity.lat, currentCity.lng],
-      [city.lat, city.lng],
-    ]);
     addCity(city);
     setDrawerOpen(false);
     setModalOpen(true);
+
+    // Generate route polyline
+    try {
+      const response = await fetch(
+        `${OSRM_API_URL}/driving/${currentCity.lng},${currentCity.lat};${city.lng},${city.lat}`,
+      );
+      const route = await response.json();
+
+      MapControlls.addPermanentPolyline([
+        [currentCity.lat, currentCity.lng],
+        ...decode(route.routes[0].geometry),
+        [city.lat, city.lng],
+      ]);
+    } catch (error) {
+      console.log(error);
+      MapControlls.addPermanentPolyline([
+        [currentCity.lat, currentCity.lng],
+        [city.lat, city.lng],
+      ]);
+    }
   };
 
   const onCitySearchResultHover = (index: number) => {

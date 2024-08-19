@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { City, Route } from '../../../types';
+import { City, OSRMQuery, Route } from '../../../types';
 import { RoutesAPIUrls } from '../../../urls';
+import { OSRM_API_URL } from '../../../config';
 
 const useRoute = (start?: City | null, end?: City | null) => {
   const [route, setRoute] = useState<Route>();
@@ -11,34 +12,24 @@ const useRoute = (start?: City | null, end?: City | null) => {
 
   const toKilometers = (distance?: number) => {
     if (!distance) return 0;
-    return Math.round(distance);
+    return Math.round(distance / 1000);
   };
 
   const fetchRoute = async () => {
     if (!start || !end) return;
-    const url = RoutesAPIUrls.getRouteUrl();
-    const request = {
-      route: [
-        {
-          name: start.city,
-          country: start.iso3,
-        },
-        {
-          name: end.city,
-          country: end.iso3,
-        },
-      ],
-    };
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: new Headers({ 'content-type': 'application/json' }),
-      body: JSON.stringify(request),
-    });
-    if (!response.ok) return setRoute(undefined);
-    const route = await response.json();
-    setRoute({
-      distance: toKilometers(route?.distance) || 0,
-    });
+    try {
+      const response = await fetch(
+        `${OSRM_API_URL}/driving/${start.lng},${start.lat};${end.lng},${end.lat}`,
+      );
+      const route: OSRMQuery = await response.json();
+      if (!response.ok) return setRoute(undefined);
+      setRoute({
+        distance: toKilometers(route?.routes[0].distance) || 0,
+        duration: route?.routes[0].duration || 0,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {
