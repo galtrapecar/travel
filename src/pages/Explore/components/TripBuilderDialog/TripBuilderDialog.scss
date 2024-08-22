@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow: auto;
+
   &__start {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &__destination {
     width: 100%;
     height: 56px;
@@ -18,6 +21,17 @@
     justify-content: space-between;
     border-radius: 4px;
   }
+
+  &__destinationIcon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: $color-white;
+    div {
+      color: inherit;
+    }
+  }
+
   &__details {
     display: flex;
     gap: 10px;
@@ -26,6 +40,7 @@
       color: $color-mono100;
     }
   }
+
   &__moreButton {
     justify-content: center;
     background-color: transparent;

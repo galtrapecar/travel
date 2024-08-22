@@ -1,0 +1,73 @@
+.TripCard {
+  min-height: 160px;
+  width: 100%;
+  padding: 10px 10px 10px 16px;
+  background-color: $color-mono600;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__stat {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__statLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: $color-mono400;
+  }
+
+  &__statContent {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__statContentGroup {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: $color-white;
+    font-size: 16px;
+  }
+
+  &__thumbnail {
+    width: 200px;
+    max-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: $color-mono700;
+  }
+
+  &__thumbnailImage {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+  }
+
+  &__thumbnailLabel {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: $color-mono200;
+  }
+}

@@ -10,6 +10,8 @@ import { Icons } from '../../../../assets/icons';
 import React from 'react';
 import StayDialog from '../StayDialog/StayDialog';
 import IconButton from '../../../../components/IconButton/IconButton';
+import { formatTimeFromSeconds } from '../../../../utils/time';
+import TripCard from '../TripCard/TripCard';
 
 const TripBuilderDialog = () => {
   const startLocation = useRecoilValue(startLocationAtom);
@@ -55,17 +57,31 @@ const TripBuilderDialog = () => {
             </div>
           );
         }
+
         if (_.isObject(location.transport)) {
           return (
             <React.Fragment key={location.city?.city || String(i)}>
-              <div className="TripBuilderDialog__details">
+              {!_.isObject(location.city) && !_.isObject(location.stay) && <div className="TripBuilderDialog__details">
                 Taking <span>{getTransportIcon(location.transport)}</span> to:
-              </div>
-              {!_.isObject(location.city) && <TransportDialog />}
-              {_.isObject(location.city) && (
+              </div>}
+              {!_.isObject(location.city) && !_.isObject(location.stay) && <TransportDialog />}
+              {_.isObject(location.city) && !_.isObject(location.stay) && (
                 <>
                   <div className="TripBuilderDialog__destination">
-                    <div>{``}</div>
+                    {location.city?.duration && (
+                      <div className="TripBuilderDialog__destinationIcon">
+                        <Icons.ClockIcon width={24} height={24} />
+                        <div>
+                          {formatTimeFromSeconds(location.city.duration)}
+                        </div>
+                      </div>
+                    )}
+                    {location.city?.distance && (
+                      <div className="TripBuilderDialog__destinationIcon">
+                        <Icons.CarIcon width={24} height={24} />
+                        <div>{`${Math.round(location.city.distance / 1000)} km`}</div>
+                      </div>
+                    )}
                     <div />
                     <CityPill darker {...location.city} />
                   </div>
@@ -79,10 +95,12 @@ const TripBuilderDialog = () => {
               )}
               {_.isObject(location.city) && _.isObject(location.stay) && (
                 <>
-                  <div className="TripBuilderDialog__destination">
-                    <div>{`${location.stay.duration} ${location.stay.duration === 1 ? 'day' : 'days'}`}</div>
-                    <Icons.ClockIcon width={24} height={24} />
-                  </div>
+                  {<TripCard {...location} /> || (
+                    <div className="TripBuilderDialog__destination">
+                      <div>{`${location.stay!.duration} ${location.stay!.duration === 1 ? 'day' : 'days'}`}</div>
+                      <Icons.ClockIcon width={24} height={24} />
+                    </div>
+                  )}
                 </>
               )}
             </React.Fragment>

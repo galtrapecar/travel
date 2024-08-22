@@ -104,9 +104,6 @@ const Explore = () => {
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
-    addCity(city);
-    setDrawerOpen(false);
-    setModalOpen(true);
 
     // Generate route polyline
     try {
@@ -115,6 +112,8 @@ const Explore = () => {
       );
       const route = await response.json();
 
+      addCity(city, route.routes[0]);
+
       MapControlls.addPermanentPolyline([
         [currentCity.lat, currentCity.lng],
         ...decode(route.routes[0].geometry),
@@ -122,10 +121,16 @@ const Explore = () => {
       ]);
     } catch (error) {
       console.log(error);
+
+      addCity(city);
+
       MapControlls.addPermanentPolyline([
         [currentCity.lat, currentCity.lng],
         [city.lat, city.lng],
       ]);
+    } finally {
+      setDrawerOpen(false);
+      setModalOpen(true);
     }
   };
 

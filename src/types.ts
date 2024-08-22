@@ -70,7 +70,7 @@ export type Stay = {
 };
 
 export type Location = {
-  city?: City;
+  city?: City & OSRMRouteOptional;
   transport?: Transport;
   stay?: Stay;
   startLocation?: boolean;
@@ -80,7 +80,10 @@ export type Trip = Location[];
 
 // OSRM
 
+export type OSRMRoute = { distance: number; duration: number; geometry: string };
+export type OSRMRouteOptional = { distance?: number; duration?: number; geometry?: string };
+
 export type OSRMQuery = {
   code: 'Ok';
-  routes: { distance: number; duration: number; geometry: string }[];
+  routes: OSRMRoute[];
 };

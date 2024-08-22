@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { tripAtom } from '../state';
-import { City, Location, Stay, TransportType } from '../../../types';
+import { City, Location, OSRMRoute, Stay, TransportType } from '../../../types';
 import _ from 'lodash';
 
 const useBuildTrip = () => {
@@ -16,12 +16,14 @@ const useBuildTrip = () => {
     setTrip(updatedTrip);
   };
 
-  const addCity = (city: City) => {
+  const addCity = (city: City, route?: OSRMRoute) => {
     const updatedTrip = [
       ...trip.slice(0, trip.length - 1),
       {
-        ...trip.at(-1),
-        city,
+        ...{
+          ...trip.at(-1),
+          city: {...city, ...route}
+        },
       },
     ];
     setTrip(updatedTrip);

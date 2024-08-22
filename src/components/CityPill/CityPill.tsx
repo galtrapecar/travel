@@ -14,7 +14,7 @@ const CityPill = ({
         'CityPill--darker': Boolean(darker),
       })}
     >
-      {[city, country].join(', ')}
+      {[city].join(', ')}
       <FlagIcon iso2={iso2} />
     </div>
   );
