@@ -4,6 +4,7 @@ import InputField from '../../../../components/InputField/InputField';
 import useBuildTrip from '../../hooks/useBuildTrip';
 import { Location, StayType } from '../../../../types';
 import _ from 'lodash';
+import IconButton from '../../../../components/IconButton/IconButton';
 
 type StayDialogProps = {
   location: Location;
@@ -19,38 +20,64 @@ const StayDialog = ({ location }: StayDialogProps) => {
       case StayType.Overnight:
         return 'How many nights?';
       case StayType.MidDay:
-        return 'How many hoours?';
+        return 'How many hours?';
     }
   };
+
+  const getDialogIcon = () => {
+    if (type === StayType.MidDay)
+      return <Icons.SunIcon width={24} height={24} />;
+    if (type === StayType.Overnight)
+      return <Icons.BedIcon width={24} height={24} />;
+  };
+
+  const getButtonIcon = () => {
+    if (type === StayType.Overnight)
+      return <Icons.SunIcon width={24} height={24} />;
+    if (type === StayType.MidDay)
+      return <Icons.BedIcon width={24} height={24} />;
+  };
+
   if (
     _.isObject(location.transport) &&
     _.isObject(location.city) &&
     !_.isObject(location.stay)
   ) {
     return (
-      <div
-        className="StayDialog"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            if (!duration) return;
-            addStay({
-              duration,
-              type,
-            });
-          }
-        }}
-      >
-        <InputField
-          placeholder={getPlaceholder()}
-          icon={<Icons.ClockIcon width={24} height={24} />}
-          onInput={(e) => {
-            // @ts-ignore
-            setDuration(e.currentTarget.value);
+      <>
+        <div className="TripBuilderDialog__details">
+          Staying <span>{getDialogIcon()}</span> for:
+        </div>
+        <div
+          className="StayDialog"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              if (!duration) return;
+              addStay({
+                duration,
+                type,
+              });
+            }
           }}
-          value={duration}
-          type="number"
-        />
-      </div>
+        >
+          <InputField
+            placeholder={getPlaceholder()}
+            icon={<Icons.ClockIcon width={24} height={24} />}
+            onInput={(e) => {
+              setDuration(parseInt(e.currentTarget.value));
+            }}
+            value={duration}
+            type="number"
+          />
+          <IconButton
+            icon={getButtonIcon()}
+            onClick={() => {
+              if (type === StayType.MidDay) setType(StayType.Overnight);
+              if (type === StayType.Overnight) setType(StayType.MidDay);
+            }}
+          />
+        </div>
+      </>
     );
   }
 

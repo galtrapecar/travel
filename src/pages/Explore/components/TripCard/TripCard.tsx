@@ -1,14 +1,37 @@
 import { memo } from 'react';
 import { Icons } from '../../../../assets/icons';
 import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
-import { Location } from '../../../../types';
+import { Location, StayType } from '../../../../types';
 import { formatTimeFromSeconds } from '../../../../utils/time';
 
 type TripCardProps = Location;
 
 const TripCard = ({ city, stay }: TripCardProps) => {
+  const getStayDetails = () => {
+    if (!stay) return;
+
+    if (stay.type === StayType.Overnight) {
+      return (
+        <>
+          <Icons.BedIcon width={24} height={24} />
+          {`${stay.duration} ${stay.duration === 1 ? 'day' : 'days'}`}
+        </>
+      );
+    }
+
+    if (stay.type === StayType.MidDay) {
+      return (
+        <>
+          <Icons.SunIcon width={24} height={24} />
+          {`${stay.duration} ${stay.duration === 1 ? 'hour' : 'hours'}`}
+        </>
+      );
+    }
+  };
+
   if (!city) return null;
   if (!stay) return null;
+
   return (
     <div className="TripCard">
       <div className="TripCard__stats">
@@ -39,10 +62,7 @@ const TripCard = ({ city, stay }: TripCardProps) => {
         <div className="TripCard__stat">
           <div className="TripCard__statLabel">Staying for</div>
           <div className="TripCard__statContent">
-            <div className="TripCard__statContentGroup">
-              <Icons.BedIcon width={24} height={24} />
-              {`${stay.duration} ${stay.duration === 1 ? 'day' : 'days'}`}
-            </div>
+            <div className="TripCard__statContentGroup">{getStayDetails()}</div>
           </div>
         </div>
       </div>

@@ -8,10 +8,6 @@ import _ from 'lodash';
 type TripBuilderDestinationProps = { location: Location };
 
 const TripBuilderDestination = ({ location }: TripBuilderDestinationProps) => {
-  const getBedIcon = () => {
-    return <Icons.BedIcon width={24} height={24} />;
-  };
-
   const getTransportIcon = () => {
     switch (location.transport?.type) {
       case TransportType.Plane:
@@ -48,9 +44,6 @@ const TripBuilderDestination = ({ location }: TripBuilderDestinationProps) => {
           )}
           <div />
           <CityPill darker {...location.city} />
-        </div>
-        <div className="TripBuilderDialog__details">
-          Staying <span>{getBedIcon()}</span> for:
         </div>
       </>
     );
