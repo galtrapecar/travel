@@ -16,7 +16,6 @@ import CityCard from '../../components/CityCard/CityCard';
 import { City } from '../../types';
 import CityInfo from '../../components/CityInfo/CityInfo';
 import _ from 'lodash';
-import { MapControlls } from '../../mapControlls';
 import CityMarker from '../../components/CityMarker/CityMarker';
 import useBuildTrip from './hooks/useBuildTrip';
 import usePois from './hooks/usePois';
@@ -25,6 +24,7 @@ import useSearchCity from './hooks/useSearchCity';
 import FlagIcon from '../../components/FlagIcon/FlagIcon';
 import { OSRM_API_URL } from '../../config';
 import { decode } from '@googlemaps/polyline-codec';
+import { MapControls } from '../../mapControls';
 
 const Explore = () => {
   const { addCity, trip } = useBuildTrip();
@@ -47,7 +47,7 @@ const Explore = () => {
       zoom: 12,
       zoomControl: false,
     });
-    MapControlls.init(map);
+    MapControls.init(map);
     L.tileLayer(
       'https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=QLSEpx2wahheTvKGENf4',
       {
@@ -66,11 +66,11 @@ const Explore = () => {
   }, []);
 
   useEffect(() => {
-    MapControlls.flyToCity(currentCity);
+    MapControls.flyToCity(currentCity);
   }, [citiesInRadius]);
 
   useEffect(() => {
-    const map = MapControlls.map;
+    const map = MapControls.map;
     if (!map) return;
     if (drawerOpen) {
       setModalOpen(false);
@@ -84,23 +84,23 @@ const Explore = () => {
   const onCityCardHover = (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     if (_.isString(trip.at(-1)?.city?.city)) return;
-    MapControlls.addTemporaryMarker(
+    MapControls.addTemporaryMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
-    MapControlls.addTemporaryPolyline([
+    MapControls.addTemporaryPolyline([
       [currentCity.lat, currentCity.lng],
       [city.lat, city.lng],
     ]);
     fetchPois(city.lat, city.lng).then((pois) => {
-      MapControlls.addPointsOfInterest(pois);
+      MapControls.addPointsOfInterest(pois);
     });
   };
 
   const onCitySelect = async (city: City) => {
     if (!city || !city.lat || !city.lng) return;
     setCurrentCity(city);
-    MapControlls.addPermanentMarker(
+    MapControls.addPermanentMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
@@ -114,7 +114,7 @@ const Explore = () => {
 
       addCity(city, route.routes[0]);
 
-      MapControlls.addPermanentPolyline([
+      MapControls.addPermanentPolyline([
         [currentCity.lat, currentCity.lng],
         ...decode(route.routes[0].geometry),
         [city.lat, city.lng],
@@ -124,7 +124,7 @@ const Explore = () => {
 
       addCity(city);
 
-      MapControlls.addPermanentPolyline([
+      MapControls.addPermanentPolyline([
         [currentCity.lat, currentCity.lng],
         [city.lat, city.lng],
       ]);
@@ -137,11 +137,11 @@ const Explore = () => {
   const onCitySearchResultHover = (index: number) => {
     const city = cities.at(index);
     if (!city) return;
-    MapControlls.addTemporaryMarker(
+    MapControls.addTemporaryMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
     if (!currentCity) return;
-    MapControlls.addTemporaryPolyline([
+    MapControls.addTemporaryPolyline([
       [currentCity.lat, currentCity.lng],
       [city.lat, city.lng],
     ]);

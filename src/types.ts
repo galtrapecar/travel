@@ -65,8 +65,14 @@ export type Transport = {
   type: TransportType;
 };
 
+export enum StayType {
+  Overnight = 'overnight',
+  MidDay = 'midday',
+};
+
 export type Stay = {
   duration: number;
+  type: StayType;
 };
 
 export type Location = {

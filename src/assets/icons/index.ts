@@ -10,6 +10,7 @@ import { ReactComponent as MagnifyingGlassIcon } from './MagnifyingGlass.svg';
 import { ReactComponent as MapIcon } from './Map.svg';
 import { ReactComponent as OpenLinkIcon } from './OpenLink.svg';
 import { ReactComponent as PlaneIcon } from './Plane.svg';
+import { ReactComponent as SunIcon } from './Sun.svg';
 import { ReactComponent as TrainIcon } from './Train.svg';
 
 export const Icons = {
@@ -25,5 +26,6 @@ export const Icons = {
   MapIcon,
   OpenLinkIcon,
   PlaneIcon,
+  SunIcon,
   TrainIcon,
 };

@@ -9,7 +9,7 @@ import L from 'leaflet';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { currentCityAtom, startLocationAtom } from '../../state';
 import useBuildTrip from '../../hooks/useBuildTrip';
-import { MapControlls } from '../../../../mapControlls';
+import { MapControls } from '../../../../mapControls';
 import CityMarker from '../../../../components/CityMarker/CityMarker';
 import { CitiesAPIUrls } from '../../../../urls';
 
@@ -34,7 +34,7 @@ const StartLocationDialog = () => {
         setStartLocation(city || null);
         setCurrentCity(city || null);
         if (!city) return;
-        MapControlls.addPermanentMarker(
+        MapControls.addPermanentMarker(
           L.marker([city.lat, city.lng], {
             icon: CityMarker(city),
           }),
@@ -47,10 +47,10 @@ const StartLocationDialog = () => {
   const onHover = (index: number) => {
     const city = cities.at(index);
     if (!city) return;
-    MapControlls.addTemporaryMarker(
+    MapControls.addTemporaryMarker(
       L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
     );
-    MapControlls.map.flyTo([city.lat, city.lng], 10, {
+    MapControls.map.flyTo([city.lat, city.lng], 10, {
       animate: true,
       duration: 3,
     });
@@ -62,7 +62,7 @@ const StartLocationDialog = () => {
     setStartLocation(city || null);
     setCurrentCity(city || null);
     if (!city) return;
-    MapControlls.addPermanentMarker(
+    MapControls.addPermanentMarker(
       L.marker([city.lat, city.lng], {
         icon: CityMarker(city),
       }),
