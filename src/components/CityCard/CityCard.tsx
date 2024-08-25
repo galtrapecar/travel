@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Icons } from '../../assets/icons';
 import useRoute from '../../pages/Explore/hooks/useRoute';
 import { City } from '../../types';
@@ -85,4 +86,4 @@ const CityCard = (props: CityCardProps) => {
   );
 };
 
-export default CityCard;
+export default memo(CityCard);

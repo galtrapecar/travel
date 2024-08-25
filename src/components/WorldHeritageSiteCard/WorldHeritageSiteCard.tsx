@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { WorldHeritageSite } from '../../types';
 import FlagIcon from '../FlagIcon/FlagIcon';
 import OpenLinkButton from '../OpenLinkButton/OpenLinkButton';
@@ -34,4 +35,4 @@ const WorldHeritageSiteCard = (site: WorldHeritageSite) => {
   );
 };
 
-export default WorldHeritageSiteCard;
+export default memo(WorldHeritageSiteCard);

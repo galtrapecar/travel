@@ -4,6 +4,7 @@ import IconButton from '../../../../components/IconButton/IconButton';
 import { cityDrawerOpenAtom } from '../../state';
 import _ from 'lodash';
 import { Location, Transport, TransportType } from '../../../../types';
+import { memo } from 'react';
 
 type TransportDialogProps = {
   location: Location;
@@ -47,4 +48,4 @@ const TransportDialog = ({ location }: TransportDialogProps) => {
   return null;
 };
 
-export default TransportDialog;
+export default memo(TransportDialog);

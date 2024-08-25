@@ -3,6 +3,7 @@ import { Icons } from '../../assets/icons';
 import ExpandableButton from '../ExpandableButton/ExpandableButton';
 import FlagIcon from '../FlagIcon/FlagIcon';
 import { searchOnDuckDuckGo, searchOnGoogle } from '../../search';
+import { memo } from 'react';
 
 type CityInfoHeaderProps = {
   city: string;
@@ -61,4 +62,4 @@ const CityInfoHeader = ({
   );
 };
 
-export default CityInfoHeader;
+export default memo(CityInfoHeader);

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type InputFieldProps = {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -26,4 +28,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default memo(InputField);

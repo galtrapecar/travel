@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Icons } from '../../assets/icons';
 import IconButton from '../IconButton/IconButton';
 
@@ -27,4 +27,4 @@ const Drawer = ({ children, open, onClose }: DrawerProps) => {
   );
 };
 
-export default Drawer;
+export default memo(Drawer);

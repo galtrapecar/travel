@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Icons } from '../../assets/icons';
 
 type OpenLinkButtonProps = { url: string };
@@ -15,4 +16,4 @@ const OpenLinkButton = ({ url }: OpenLinkButtonProps) => {
   );
 };
 
-export default OpenLinkButton;
+export default memo(OpenLinkButton);

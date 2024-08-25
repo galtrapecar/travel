@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Icons } from '../../../../assets/icons';
 import InputField from '../../../../components/InputField/InputField';
 import useBuildTrip from '../../hooks/useBuildTrip';
@@ -84,4 +84,4 @@ const StayDialog = ({ location }: StayDialogProps) => {
   return null;
 };
 
-export default StayDialog;
+export default memo(StayDialog);

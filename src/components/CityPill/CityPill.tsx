@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { City } from '../../types';
 import FlagIcon from '../FlagIcon/FlagIcon';
 import cx from 'classnames';
@@ -20,4 +21,4 @@ const CityPill = ({
   );
 };
 
-export default CityPill;
+export default memo(CityPill);

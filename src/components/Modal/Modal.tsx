@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { memo, ReactNode, useEffect, useState } from 'react';
 import { Portal } from 'react-portal';
 import IconButton from '../IconButton/IconButton';
 import { Icons } from '../../assets/icons';
@@ -58,4 +58,4 @@ const Modal = ({ children, open, setModalOpen }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default memo(Modal);

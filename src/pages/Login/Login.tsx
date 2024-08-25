@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
@@ -11,4 +12,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

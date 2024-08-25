@@ -5,7 +5,7 @@ import useBuildTrip from '../../hooks/useBuildTrip';
 import CityPill from '../../../../components/CityPill/CityPill';
 import { TransportType } from '../../../../types';
 import TransportDialog from '../TransportDialog/TransportDialog';
-import React from 'react';
+import React, { memo } from 'react';
 import StayDialog from '../StayDialog/StayDialog';
 import IconButton from '../../../../components/IconButton/IconButton';
 import TripCard from '../TripCard/TripCard';
@@ -55,4 +55,4 @@ const TripBuilderDialog = () => {
   );
 };
 
-export default TripBuilderDialog;
+export default memo(TripBuilderDialog);

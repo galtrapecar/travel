@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Modal from '../../components/Modal/Modal';
 import StartLocationDialog from './components/StartLocationDialog/StartLocationDialog';
 import TripBuilderDialog from './components/TripBuilderDialog/TripBuilderDialog';
@@ -193,4 +193,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default memo(Explore);

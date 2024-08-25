@@ -4,7 +4,7 @@ import { selectedCityInfoAtom } from '../../pages/Explore/state';
 import CityInfoHeader from '../CityInfoHeader/CityInfoHeader';
 import IconButton from '../IconButton/IconButton';
 import _ from 'lodash';
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import cx from 'classnames';
 import { City, PointOfInterestType } from '../../types';
 import useWorldHeritageSites from '../../pages/Explore/hooks/useWorldHeritageSites';
@@ -33,7 +33,7 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
     }
   };
 
-  const getPoiTypes = () => {    
+  const getPoiTypes = () => {
     return pois.reduce((types, poi) => {
       if (!types.find((type) => type === poi.type)) {
         const newTypes = [...types];
@@ -110,4 +110,4 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
   );
 };
 
-export default CityInfo;
+export default memo(CityInfo);

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Icons } from '../../../../assets/icons';
 import IconButton from '../../../../components/IconButton/IconButton';
 import SearchBar from '../../../../components/SearchBar/SearchBar';
@@ -99,4 +99,4 @@ const StartLocationDialog = () => {
   );
 };
 
-export default StartLocationDialog;
+export default memo(StartLocationDialog);

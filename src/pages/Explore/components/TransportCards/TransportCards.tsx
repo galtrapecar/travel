@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Icons } from '../../../../assets/icons';
 import { TransportType } from '../../../../types';
 
@@ -39,4 +40,4 @@ const TransportCards = ({ onSelect }: TransportCardsProps) => {
   );
 };
 
-export default TransportCards;
+export default memo(TransportCards);

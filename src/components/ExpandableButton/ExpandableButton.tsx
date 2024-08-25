@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type ExpandableButtonProps = {
   icon: JSX.Element;
   label: string;
@@ -13,4 +15,4 @@ const ExpandableButton = ({ icon, label, onClick }: ExpandableButtonProps) => {
   );
 };
 
-export default ExpandableButton;
+export default memo(ExpandableButton);

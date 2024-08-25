@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { iso2FlagEmoji } from './util';
 
 type FlagIconProps = {
@@ -41,4 +42,4 @@ const FlagIcon = ({ iso2, iso3, width, height }: FlagIconProps) => {
   );
 };
 
-export default FlagIcon;
+export default memo(FlagIcon);

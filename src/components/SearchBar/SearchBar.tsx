@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Icons } from '../../assets/icons';
+import { memo } from 'react';
 
 type SearchBarResult = {
   label: string;
@@ -50,4 +51,4 @@ const SearchBar = ({
   );
 };
 
-export default SearchBar;
+export default memo(SearchBar);

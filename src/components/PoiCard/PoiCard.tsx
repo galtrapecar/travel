@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Icons } from '../../assets/icons';
 import { searchOnDuckDuckGo, searchOnGoogle } from '../../search';
 import { PointOfInterest } from '../../types';
@@ -40,4 +41,4 @@ const PoiCard = (poi: PointOfInterest) => {
   );
 };
 
-export default PoiCard;
+export default memo(PoiCard);

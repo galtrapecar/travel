@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { memo } from 'react';
 
 type IconButtonProps = {
   className?: string;
@@ -36,4 +37,4 @@ const IconButton = ({
   );
 };
 
-export default IconButton;
+export default memo(IconButton);
