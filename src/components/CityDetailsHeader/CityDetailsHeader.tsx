@@ -5,19 +5,19 @@ import FlagIcon from '../FlagIcon/FlagIcon';
 import { searchOnDuckDuckGo, searchOnGoogle } from '../../search';
 import { memo } from 'react';
 
-type CityInfoHeaderProps = {
+type CityDetailsHeaderProps = {
   city: string;
   country: string;
   iso2: string;
   image?: string;
 };
 
-const CityInfoHeader = ({
+const CityDetailsHeader = ({
   city,
   country,
   iso2,
   image,
-}: CityInfoHeaderProps) => {
+}: CityDetailsHeaderProps) => {
   const openDuckDuckGo = () => {
     searchOnDuckDuckGo(`${city}%20${country}`);
   };
@@ -27,9 +27,9 @@ const CityInfoHeader = ({
   };
 
   return (
-    <div className="CityInfoHeader">
-      <div className="CityInfoHeader__left">
-        <div className="CityInfoHeader__image">
+    <div className="CityDetailsHeader">
+      <div className="CityDetailsHeader__left">
+        <div className="CityDetailsHeader__image">
           {_.isString(image) && (
             <img
               src={image}
@@ -39,14 +39,14 @@ const CityInfoHeader = ({
           )}
         </div>
         <div>
-          <div className="CityInfoHeader__title">{city}</div>
-          <div className="CityInfoHeader__subtitleWrapper">
+          <div className="CityDetailsHeader__title">{city}</div>
+          <div className="CityDetailsHeader__subtitleWrapper">
             <FlagIcon iso2={iso2} />
-            <div className="CityInfoHeader__subtitle">{country}</div>
+            <div className="CityDetailsHeader__subtitle">{country}</div>
           </div>
         </div>
       </div>
-      <div className="CityInfoHeader__links">
+      <div className="CityDetailsHeader__links">
         <ExpandableButton
           icon={<Icons.DuckDuckGoLogoIcon width={24} height={24} />}
           onClick={openDuckDuckGo}
@@ -62,4 +62,4 @@ const CityInfoHeader = ({
   );
 };
 
-export default memo(CityInfoHeader);
+export default memo(CityDetailsHeader);

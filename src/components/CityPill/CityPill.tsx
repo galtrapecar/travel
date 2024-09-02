@@ -5,14 +5,15 @@ import cx from 'classnames';
 
 const CityPill = ({
   city,
-  country,
   iso2,
   darker,
-}: City & { darker?: boolean }) => {
+  onClick,
+}: City & { darker?: boolean; onClick?: (city: City) => void }) => {
   return (
     <div
       className={cx('CityPill', {
         'CityPill--darker': Boolean(darker),
+        'CityPill--clickable': onClick,
       })}
     >
       {[city].join(', ')}

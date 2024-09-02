@@ -6,7 +6,15 @@
   padding: 8px 16px;
   background-color: $color-mono500;
   border-radius: 999px;
+  border: 1px solid transparent;
+
   &--darker {
     background-color: $color-mono600;
+  }
+
+  &--clickable {
+    &:hover {
+      border: 1px solid $color-white;
+    }
   }
 }

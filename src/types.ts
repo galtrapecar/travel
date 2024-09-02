@@ -68,7 +68,7 @@ export type Transport = {
 export enum StayType {
   Overnight = 'overnight',
   MidDay = 'midday',
-};
+}
 
 export type Stay = {
   duration: number;
@@ -76,7 +76,7 @@ export type Stay = {
 };
 
 export type Location = {
-  city?: City & OSRMRouteOptional;
+  city?: City & { image?: string } & OSRMRouteOptional;
   transport?: Transport;
   stay?: Stay;
   startLocation?: boolean;
@@ -86,8 +86,16 @@ export type Trip = Location[];
 
 // OSRM
 
-export type OSRMRoute = { distance: number; duration: number; geometry: string };
-export type OSRMRouteOptional = { distance?: number; duration?: number; geometry?: string };
+export type OSRMRoute = {
+  distance: number;
+  duration: number;
+  geometry: string;
+};
+export type OSRMRouteOptional = {
+  distance?: number;
+  duration?: number;
+  geometry?: string;
+};
 
 export type OSRMQuery = {
   code: 'Ok';

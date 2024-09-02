@@ -8,13 +8,12 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   cityDrawerOpenAtom,
   currentCityAtom,
-  selectedCityInfoAtom,
+  selectedCityDetailsAtom,
   startLocationAtom,
 } from './state';
 import useGetCitiesInRadius from './hooks/useGetCitiesInRadius';
 import CityCard from '../../components/CityCard/CityCard';
 import { City } from '../../types';
-import CityInfo from '../../components/CityInfo/CityInfo';
 import _ from 'lodash';
 import CityMarker from '../../components/CityMarker/CityMarker';
 import useBuildTrip from './hooks/useBuildTrip';
@@ -25,6 +24,7 @@ import FlagIcon from '../../components/FlagIcon/FlagIcon';
 import { OSRM_API_URL } from '../../config';
 import { decode } from '@googlemaps/polyline-codec';
 import { MapControls } from '../../mapControls';
+import CityDetails from '../../components/CityDetails/CityDetails';
 
 const Explore = () => {
   const { addCity, trip } = useBuildTrip();
@@ -34,8 +34,9 @@ const Explore = () => {
   const [cityQuery, setCityQuery] = useState('');
   const { cities } = useSearchCity(cityQuery);
   const [currentCity, setCurrentCity] = useRecoilState(currentCityAtom);
-  const [selectedCityInfo, setSelectedCityInfo] =
-    useRecoilState(selectedCityInfoAtom);
+  const [selectedCityDetails, setSelectedCityDetails] = useRecoilState(
+    selectedCityDetailsAtom,
+  );
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
   const { fetchPois } = usePois();
   const startLocation = useRecoilValue(startLocationAtom);
@@ -182,13 +183,13 @@ const Explore = () => {
                   {...city}
                   onMouseEnter={onCityCardHover}
                   onClick={onCitySelect}
-                  onInfoClick={setSelectedCityInfo}
+                  onInfoClick={setSelectedCityDetails}
                   startLocation={startLocation}
                 />
               ))}
         </div>
       </Drawer>
-      {selectedCityInfo && <CityInfo {...selectedCityInfo} />}
+      {selectedCityDetails && <CityDetails {...selectedCityDetails} />}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { Icons } from '../../assets/icons';
-import { selectedCityInfoAtom } from '../../pages/Explore/state';
-import CityInfoHeader from '../CityInfoHeader/CityInfoHeader';
+import { selectedCityDetailsAtom } from '../../pages/Explore/state';
 import IconButton from '../IconButton/IconButton';
 import _ from 'lodash';
 import { memo, useRef, useState } from 'react';
@@ -12,12 +11,20 @@ import WorldHeritageSiteCard from '../WorldHeritageSiteCard/WorldHeritageSiteCar
 import { Images } from '../../assets/img';
 import usePois from '../../pages/Explore/hooks/usePois';
 import PoiCard from '../PoiCard/PoiCard';
+import CityDetailsHeader from '../CityDetailsHeader/CityDetailsHeader';
 
-type CityInfoProps = City & { image?: string };
+type CityDetailsProps = City & { image?: string };
 
-const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
+const CityDetails = ({
+  city,
+  country,
+  iso2,
+  image,
+  lat,
+  lng,
+}: CityDetailsProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const setSelectedCityInfo = useSetRecoilState(selectedCityInfoAtom);
+  const setSelectedCityDetails = useSetRecoilState(selectedCityDetailsAtom);
   const [isClosing, setIsClosing] = useState(false);
   const { pois } = usePois(lat, lng);
   const { worldHeritageSites } = useWorldHeritageSites(lat, lng);
@@ -26,10 +33,10 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
     if (ref.current) {
       setIsClosing(true);
       ref.current.addEventListener('animationend', () =>
-        setSelectedCityInfo(null),
+        setSelectedCityDetails(null),
       );
     } else {
-      setSelectedCityInfo(null);
+      setSelectedCityDetails(null);
     }
   };
 
@@ -63,8 +70,8 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
   if (!city || !country || !iso2) return null;
   return (
     <div
-      className={cx('CityInfo', {
-        'CityInfo--closing': isClosing,
+      className={cx('CityDetails', {
+        'CityDetails--closing': isClosing,
       })}
       ref={ref}
     >
@@ -74,13 +81,18 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
         icon={<Icons.ChevronLeftIcon width={24} height={24} />}
         onClick={onClose}
       />
-      <CityInfoHeader city={city} country={country} iso2={iso2} image={image} />
+      <CityDetailsHeader
+        city={city}
+        country={country}
+        iso2={iso2}
+        image={image}
+      />
       {worldHeritageSites?.length > 0 && (
-        <div className="CityInfo__section">
-          <div className="CityInfo__section__header">
+        <div className="CityDetails__section">
+          <div className="CityDetails__section__header">
             {Images.WordlHeritage}World Heritage
           </div>
-          <div className="CityInfo__section__cards">
+          <div className="CityDetails__section__cards">
             {worldHeritageSites.map((worldHeritageSite) => (
               <WorldHeritageSiteCard
                 key={worldHeritageSite.id}
@@ -92,11 +104,11 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
       )}
       {getPoiTypes().map((poiType) => {
         return (
-          <div className="CityInfo__section">
-            <div className="CityInfo__section__header">
+          <div className="CityDetails__section">
+            <div className="CityDetails__section__header">
               {poiTypeTitleMap[poiType]}
             </div>
-            <div className="CityInfo__section__cards">
+            <div className="CityDetails__section__cards">
               {pois
                 .filter((poi) => poi.type === poiType)
                 .map((poi) => (
@@ -110,4 +122,4 @@ const CityInfo = ({ city, country, iso2, image, lat, lng }: CityInfoProps) => {
   );
 };
 
-export default memo(CityInfo);
+export default memo(CityDetails);

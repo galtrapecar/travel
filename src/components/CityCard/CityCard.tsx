@@ -10,7 +10,7 @@ import _ from 'lodash';
 type CityCardProps = City & {
   onMouseEnter?: (city: City) => void;
   onClick?: (city: City) => void;
-  onInfoClick?: (city: City & { image?: string }) => void;
+  onInfoClick?: (city: City) => void;
   startLocation?: City | null;
 };
 
@@ -28,8 +28,8 @@ const CityCard = (props: CityCardProps) => {
   const { image } = useCityImage(props, image_url);
   const { route } = useRoute(startLocation, props);
 
-  const toCity = (city: CityCardProps): City => {
-    const cleanCity = { ...city };
+  const toCity = (city: CityCardProps, image?: string): City => {
+    const cleanCity = { ...city, image_url: image || city.image_url };
     delete cleanCity.onMouseEnter;
     delete cleanCity.onClick;
     delete cleanCity.startLocation;
@@ -79,7 +79,7 @@ const CityCard = (props: CityCardProps) => {
         label={'More info'}
         onClick={(e) => {
           e.stopPropagation();
-          onInfoClick?.({ ...toCity(props), image: image });
+          onInfoClick?.({ ...toCity(props, image) });
         }}
       />
     </div>

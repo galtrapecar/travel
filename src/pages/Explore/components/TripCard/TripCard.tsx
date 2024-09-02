@@ -14,7 +14,7 @@ const TripCard = ({ city, stay }: TripCardProps) => {
       return (
         <>
           <Icons.BedIcon width={24} height={24} />
-          {`${stay.duration} ${stay.duration === 1 ? 'day' : 'days'}`}
+          {`${stay.duration} ${stay.duration === 1 ? 'night' : 'nights'}`}
         </>
       );
     }
