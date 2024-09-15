@@ -9,11 +9,11 @@ const PoiCard = (poi: PointOfInterest) => {
   const { image } = usePoiImage(poi);
 
   const openDuckDuckGo = () => {
-    searchOnDuckDuckGo(`${poi.name}%20${poi.location}`);
+    searchOnDuckDuckGo(`${poi?.name}%20${poi?.type}`);
   };
 
   const openGoogle = () => {
-    searchOnGoogle(`${poi.name}%20${poi.location}`);
+    searchOnGoogle(`${poi?.name}%20${poi?.type}`);
   };
 
   return (

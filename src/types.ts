@@ -56,7 +56,7 @@ export type WorldHeritageSite = {
 };
 
 export enum TransportType {
-  Plane = 'tlane',
+  Plane = 'plane',
   Car = 'car',
   Train = 'train',
 }

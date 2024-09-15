@@ -6,7 +6,8 @@ import { Icons } from '../../assets/icons';
 type ModalProps = {
   children: ReactNode;
   open: boolean;
-  setModalOpen: (state: boolean) => void;
+  onRequestClose: () => void;
+  onRequestOpen?: () => void;
 };
 
 type OpenModalButtonProps = {
@@ -35,7 +36,12 @@ const OpenModalButton = ({ open, onOpen }: OpenModalButtonProps) => {
   );
 };
 
-const Modal = ({ children, open, setModalOpen }: ModalProps) => {
+const Modal = ({
+  children,
+  open,
+  onRequestClose,
+  onRequestOpen,
+}: ModalProps) => {
   return (
     <>
       <Portal>
@@ -45,14 +51,14 @@ const Modal = ({ children, open, setModalOpen }: ModalProps) => {
             small
             icon={<Icons.ChevronLeftIcon width={24} height={24} />}
             onClick={() => {
-              setModalOpen(false);
+              onRequestClose();
             }}
           />
           {children}
         </div>
       </Portal>
       <Portal>
-        <OpenModalButton open={!open} onOpen={() => setModalOpen(true)} />
+        <OpenModalButton open={!open} onOpen={() => onRequestOpen?.()} />
       </Portal>
     </>
   );

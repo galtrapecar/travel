@@ -1,0 +1,53 @@
+.PointOfInterestDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__header {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: 500;
+    color: $color-white;
+  }
+
+  &__type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 400;
+    color: $color-white;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__thumbnail {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  &__thumbnailImage {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

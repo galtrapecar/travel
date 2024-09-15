@@ -9,11 +9,12 @@ import {
   cityDrawerOpenAtom,
   currentCityAtom,
   selectedCityDetailsAtom,
+  selectedPoiAtom,
   startLocationAtom,
 } from './state';
 import useGetCitiesInRadius from './hooks/useGetCitiesInRadius';
 import CityCard from '../../components/CityCard/CityCard';
-import { City } from '../../types';
+import { City, PointOfInterest } from '../../types';
 import _ from 'lodash';
 import CityMarker from '../../components/CityMarker/CityMarker';
 import useBuildTrip from './hooks/useBuildTrip';
@@ -21,10 +22,11 @@ import usePois from './hooks/usePois';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import useSearchCity from './hooks/useSearchCity';
 import FlagIcon from '../../components/FlagIcon/FlagIcon';
-import { OSRM_API_URL } from '../../config';
+import { API_URL, OSRM_API_URL } from '../../config';
 import { decode } from '@googlemaps/polyline-codec';
 import { MapControls } from '../../mapControls';
 import CityDetails from '../../components/CityDetails/CityDetails';
+import PointOfInterestDetails from './components/PointOfInterestDetails/PointOfInterestDetails';
 
 const Explore = () => {
   const { addCity, trip } = useBuildTrip();
@@ -33,13 +35,14 @@ const Explore = () => {
   const [drawerOpen, setDrawerOpen] = useRecoilState(cityDrawerOpenAtom);
   const [cityQuery, setCityQuery] = useState('');
   const { cities } = useSearchCity(cityQuery);
+  const startLocation = useRecoilValue(startLocationAtom);
   const [currentCity, setCurrentCity] = useRecoilState(currentCityAtom);
   const [selectedCityDetails, setSelectedCityDetails] = useRecoilState(
     selectedCityDetailsAtom,
   );
   const { citiesInRadius } = useGetCitiesInRadius(currentCity);
   const { fetchPois } = usePois();
-  const startLocation = useRecoilValue(startLocationAtom);
+  const [selectedPoi, setSelectedPoi] = useRecoilState(selectedPoiAtom);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -119,7 +122,13 @@ const Explore = () => {
           ...decode(route.geometry),
           [city.lat, city.lng],
         ],
-        route.geometry,
+        async () => {
+          const response = await fetch(
+            `${API_URL}/pois/nearPolyline?polyline=${route.geometry}`,
+          );
+          const pois: PointOfInterest[] = await response.json();
+          MapControls.addPointsOfInterest(pois, setSelectedPoi);
+        },
       );
     } catch (error) {
       console.log(error);
@@ -161,10 +170,17 @@ const Explore = () => {
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
-      <Modal open={modalOpen} setModalOpen={setModalOpen}>
-        <StartLocationDialog />
-        <TripBuilderDialog />
-      </Modal>
+      {
+        <Modal
+          open={modalOpen}
+          onRequestClose={() => setModalOpen(false)}
+          onRequestOpen={() => setModalOpen(true)}
+        >
+          <StartLocationDialog />
+          <TripBuilderDialog />
+        </Modal>
+      }
+      {selectedPoi && <PointOfInterestDetails />}
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <SearchBar
           placeholder="Search"

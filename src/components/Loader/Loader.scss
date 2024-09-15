@@ -1,0 +1,17 @@
+.Loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    box-shadow: -72px 0 $color-white inset;
+  }
+  100% {
+    box-shadow: 48px 0 $color-white inset;
+  }
+}

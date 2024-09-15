@@ -1,7 +1,6 @@
 import L from 'leaflet';
 import { City, PointOfInterest } from './types';
 import PoiMarker from './components/PoiMarker/PoiMarker';
-import { API_URL } from './config';
 
 export class MapControls {
   static map: L.Map;
@@ -13,13 +12,13 @@ export class MapControls {
 
   static init(map: L.Map) {
     MapControls.map = map;
-    map.on('zoomend', (e) => {
-      const zoom = map.getZoom();
-      if (zoom >= 15) {
-        MapControls.showPoiMarkers();
-      } else {
-        MapControls.hidePoiMarkers();
-      }
+    map.on('zoomend', () => {
+      // const zoom = map.getZoom();
+      // if (zoom >= 15) {
+      //   MapControls.showPoiMarkers();
+      // } else {
+      //   MapControls.hidePoiMarkers();
+      // }
     });
   }
 
@@ -50,7 +49,7 @@ export class MapControls {
 
   static addPermanentPolyline(
     points: L.LatLngExpression[],
-    encodedPolyline?: string,
+    onClick?: () => Promise<void>,
   ) {
     const map = MapControls.map;
     if (!map) return;
@@ -64,12 +63,7 @@ export class MapControls {
       opacity: 0.3,
       smoothFactor: 1,
     });
-    polyline.on('click', async () => {
-      const response = await fetch(
-        `${API_URL}/pois/nearPolyline?${encodedPolyline}`,
-      );
-      console.log(await response.json());
-    });
+    if (onClick) polyline.on('click', onClick);
     polyline.addTo(map);
     MapControls.polylines.push(polyline);
   }
@@ -100,18 +94,26 @@ export class MapControls {
   }
 
   // Points of interest
-  static addPointsOfInterest(pois: PointOfInterest[]) {
+  static addPointsOfInterest(
+    pois: PointOfInterest[],
+    onClick?: (poi: PointOfInterest) => void,
+  ) {
     MapControls.removePointsOfInterest();
     pois.forEach((poi) => {
-      MapControls.addPoiMarker(poi);
+      MapControls.addPoiMarker(poi, onClick);
     });
-    if (this.map.getZoom() >= 15) MapControls.showPoiMarkers();
+    // if (this.map.getZoom() >= 15) MapControls.showPoiMarkers();
+    MapControls.showPoiMarkers();
   }
 
-  private static addPoiMarker(poi: PointOfInterest) {
+  private static addPoiMarker(
+    poi: PointOfInterest,
+    onClick?: (poi: PointOfInterest) => void,
+  ) {
     const map = MapControls.map;
     if (!map) return;
     const marker = L.marker([poi.lat, poi.lng], { icon: PoiMarker(poi) });
+    if (onClick) marker.on('click', () => onClick(poi));
     MapControls.poiMarkers.push(marker);
   }
 

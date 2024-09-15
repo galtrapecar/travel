@@ -30,3 +30,8 @@ export const poisAtom = atom<{ [x: string]: PointOfInterest[] }>({
   key: 'pois',
   default: {},
 });
+
+export const selectedPoiAtom = atom<PointOfInterest | null>({
+  key: 'selectedPoi',
+  default: null,
+});

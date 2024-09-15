@@ -40,9 +40,13 @@ html {
 @import './components/ExpandableButton/ExpandableButton.scss';
 @import './components/CityMarker/CityMarker.scss';
 @import './components/PoiMarker/PoiMarker.scss';
+@import './components/PendingContent/PendingContent.scss';
+@import './components/Loader/Loader.scss';
+
 @import './pages/Explore/components/TransportDialog/TransportDialog.scss';
 @import './pages/Explore/components/StartLocationDialog/StartLocationDialog.scss';
 @import './pages/Explore/components/TripBuilderDialog/TripBuilderDialog.scss';
 @import './pages/Explore/components/TransportCards/TransportCards.scss';
 @import './pages/Explore/components/TripCard/TripCard.scss';
 @import './pages/Explore/components/StayDialog/StayDialog.scss';
+@import './pages/Explore/components/PointOfInterestDetails/PointOfInterestDetails.scss';
