@@ -12,22 +12,18 @@ import { Images } from '../../assets/img';
 import usePois from '../../pages/Explore/hooks/usePois';
 import PoiCard from '../PoiCard/PoiCard';
 import CityDetailsHeader from '../CityDetailsHeader/CityDetailsHeader';
+import useCityImage from '../CityCard/hooks/useCityImage';
 
 type CityDetailsProps = City & { image?: string };
 
-const CityDetails = ({
-  city,
-  country,
-  iso2,
-  image,
-  lat,
-  lng,
-}: CityDetailsProps) => {
+const CityDetails = (props: CityDetailsProps) => {
+  const { city, country, iso2, lat, lng } = props;
   const ref = useRef<HTMLDivElement>(null);
   const setSelectedCityDetails = useSetRecoilState(selectedCityDetailsAtom);
   const [isClosing, setIsClosing] = useState(false);
   const { pois } = usePois(lat, lng);
   const { worldHeritageSites } = useWorldHeritageSites(lat, lng);
+  const { image } = useCityImage(props, props.image_url);
 
   const onClose = () => {
     if (ref.current) {
@@ -104,7 +100,7 @@ const CityDetails = ({
       )}
       {getPoiTypes().map((poiType) => {
         return (
-          <div className="CityDetails__section">
+          <div key={poiType} className="CityDetails__section">
             <div className="CityDetails__section__header">
               {poiTypeTitleMap[poiType]}
             </div>

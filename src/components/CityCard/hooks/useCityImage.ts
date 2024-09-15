@@ -4,7 +4,7 @@ import { ImagesAPIUrls } from '../../../urls';
 import { DuckDuckGoImage } from 'duckduckgo-images-api';
 import _ from 'lodash';
 
-const useCityImage = (city: City, image_url?: string | null) => {
+const useCityImage = (city?: City, image_url?: string | null) => {
   const [image, setImage] = useState<string>();
 
   const fetchFromUrl = async (url?: string | null) => {

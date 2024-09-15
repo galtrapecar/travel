@@ -3,10 +3,14 @@ import { Icons } from '../../../../assets/icons';
 import FlagIcon from '../../../../components/FlagIcon/FlagIcon';
 import { Location, StayType } from '../../../../types';
 import { formatTimeFromSeconds } from '../../../../utils/time';
+import { useSetRecoilState } from 'recoil';
+import { selectedCityDetailsAtom } from '../../state';
 
 type TripCardProps = Location;
 
 const TripCard = ({ city, stay }: TripCardProps) => {
+  const setSelectedCityDetails = useSetRecoilState(selectedCityDetailsAtom);
+
   const getStayDetails = () => {
     if (!stay) return;
 
@@ -70,9 +74,12 @@ const TripCard = ({ city, stay }: TripCardProps) => {
         <div
           className="TripCard__thumbnailImage"
           style={{ backgroundImage: `url(${city.image_url})` }}
-        />
+          onClick={() => setSelectedCityDetails(city)}
+        >
+          <div className="TripCard__thumbnailImageOverlay">View details</div>
+        </div>
         <div className="TripCard__thumbnailLabel">
-          {`${city.city}`} <FlagIcon iso2={city.iso2} />
+          {city.city} <FlagIcon iso2={city.iso2} />
         </div>
       </div>
     </div>

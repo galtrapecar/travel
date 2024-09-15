@@ -100,36 +100,39 @@ const Explore = () => {
 
   const onCitySelect = async (city: City) => {
     if (!city || !city.lat || !city.lng) return;
-    setCurrentCity(city);
-    MapControls.addPermanentMarker(
-      L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
-    );
     if (!currentCity) return;
+
+    let route: any;
 
     // Generate route polyline
     try {
       const response = await fetch(
         `${OSRM_API_URL}/driving/${currentCity.lng},${currentCity.lat};${city.lng},${city.lat}`,
       );
-      const route = await response.json();
+      const routeResponse = await response.json();
 
-      addCity(city, route.routes[0]);
+      route = routeResponse.routes[0];
 
-      MapControls.addPermanentPolyline([
-        [currentCity.lat, currentCity.lng],
-        ...decode(route.routes[0].geometry),
-        [city.lat, city.lng],
-      ]);
+      MapControls.addPermanentPolyline(
+        [
+          [currentCity.lat, currentCity.lng],
+          ...decode(route.geometry),
+          [city.lat, city.lng],
+        ],
+        route.geometry,
+      );
     } catch (error) {
       console.log(error);
-
-      addCity(city);
-
       MapControls.addPermanentPolyline([
         [currentCity.lat, currentCity.lng],
         [city.lat, city.lng],
       ]);
     } finally {
+      addCity(city, route);
+      setCurrentCity(city);
+      MapControls.addPermanentMarker(
+        L.marker([city.lat, city.lng], { icon: CityMarker(city) }),
+      );
       setDrawerOpen(false);
       setModalOpen(true);
     }

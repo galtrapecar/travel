@@ -8,13 +8,14 @@ const CityPill = ({
   iso2,
   darker,
   onClick,
-}: City & { darker?: boolean; onClick?: (city: City) => void }) => {
+}: City & { darker?: boolean; onClick?: () => void }) => {
   return (
     <div
       className={cx('CityPill', {
         'CityPill--darker': Boolean(darker),
         'CityPill--clickable': onClick,
       })}
+      onClick={onClick}
     >
       {[city].join(', ')}
       <FlagIcon iso2={iso2} />

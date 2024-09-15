@@ -1,6 +1,7 @@
 import L from 'leaflet';
 import { City, PointOfInterest } from './types';
 import PoiMarker from './components/PoiMarker/PoiMarker';
+import { API_URL } from './config';
 
 export class MapControls {
   static map: L.Map;
@@ -47,7 +48,10 @@ export class MapControls {
     MapControls.temporaryPolyline = polyline;
   }
 
-  static addPermanentPolyline(points: L.LatLngExpression[]) {
+  static addPermanentPolyline(
+    points: L.LatLngExpression[],
+    encodedPolyline?: string,
+  ) {
     const map = MapControls.map;
     if (!map) return;
 
@@ -59,6 +63,12 @@ export class MapControls {
       weight: 3,
       opacity: 0.3,
       smoothFactor: 1,
+    });
+    polyline.on('click', async () => {
+      const response = await fetch(
+        `${API_URL}/pois/nearPolyline?${encodedPolyline}`,
+      );
+      console.log(await response.json());
     });
     polyline.addTo(map);
     MapControls.polylines.push(polyline);

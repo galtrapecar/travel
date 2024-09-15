@@ -13,6 +13,8 @@
   }
 
   &--clickable {
+    transition: 0.3s;
+    cursor: pointer;
     &:hover {
       border: 1px solid $color-white;
     }

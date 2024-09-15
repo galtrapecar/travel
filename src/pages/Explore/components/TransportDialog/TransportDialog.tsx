@@ -3,7 +3,7 @@ import { Icons } from '../../../../assets/icons';
 import IconButton from '../../../../components/IconButton/IconButton';
 import { cityDrawerOpenAtom } from '../../state';
 import _ from 'lodash';
-import { Location, Transport, TransportType } from '../../../../types';
+import { Location, TransportType } from '../../../../types';
 import { memo } from 'react';
 
 type TransportDialogProps = {

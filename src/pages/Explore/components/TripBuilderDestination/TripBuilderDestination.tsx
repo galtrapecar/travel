@@ -4,10 +4,14 @@ import { Icons } from '../../../../assets/icons';
 import { formatTimeFromSeconds } from '../../../../utils/time';
 import CityPill from '../../../../components/CityPill/CityPill';
 import _ from 'lodash';
+import { useSetRecoilState } from 'recoil';
+import { selectedCityDetailsAtom } from '../../state';
 
 type TripBuilderDestinationProps = { location: Location };
 
 const TripBuilderDestination = ({ location }: TripBuilderDestinationProps) => {
+  const setSelectedCityDetails = useSetRecoilState(selectedCityDetailsAtom);
+
   const getTransportIcon = () => {
     switch (location.transport?.type) {
       case TransportType.Plane:
@@ -43,7 +47,13 @@ const TripBuilderDestination = ({ location }: TripBuilderDestinationProps) => {
             </div>
           )}
           <div />
-          <CityPill darker {...location.city} />
+          {location.city && (
+            <CityPill
+              onClick={() => setSelectedCityDetails(location.city!)}
+              darker
+              {...location.city}
+            />
+          )}
         </div>
       </>
     );

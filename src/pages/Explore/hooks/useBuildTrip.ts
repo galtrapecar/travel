@@ -22,7 +22,7 @@ const useBuildTrip = () => {
       {
         ...{
           ...trip.at(-1),
-          city: {...city, ...route}
+          city: { ...city, ...route },
         },
       },
     ];
