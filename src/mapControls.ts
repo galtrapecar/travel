@@ -10,15 +10,19 @@ export class MapControls {
   static polylines: L.Polyline[] = [];
   static poiMarkers: L.Marker[] = [];
 
+  private static markerZoomLimit = 11;
+
   static init(map: L.Map) {
     MapControls.map = map;
     map.on('zoomend', () => {
-      // const zoom = map.getZoom();
-      // if (zoom >= 15) {
-      //   MapControls.showPoiMarkers();
-      // } else {
-      //   MapControls.hidePoiMarkers();
-      // }
+      const zoom = map.getZoom();
+      if (zoom >= this.markerZoomLimit) {
+        MapControls.hideMarkers();
+        MapControls.showPoiMarkers();
+      } else {
+        MapControls.showMarkers();
+        MapControls.hidePoiMarkers();
+      }
     });
   }
 
@@ -93,6 +97,21 @@ export class MapControls {
     MapControls.markers.push(marker);
   }
 
+  private static showMarkers() {
+    const map = MapControls.map;
+    if (!map) return;
+    MapControls.temporaryMarker?.addTo(map);
+    MapControls.markers?.slice(1).forEach((marker) => marker.addTo(map));
+  }
+
+  private static hideMarkers() {
+    const map = MapControls.map;
+    if (!map) return;
+    if (MapControls.temporaryMarker)
+      map.removeLayer(MapControls.temporaryMarker);
+    MapControls.markers?.slice(1).forEach((marker) => map.removeLayer(marker));
+  }
+
   // Points of interest
   static addPointsOfInterest(
     pois: PointOfInterest[],
@@ -102,7 +121,8 @@ export class MapControls {
     pois.forEach((poi) => {
       MapControls.addPoiMarker(poi, onClick);
     });
-    // if (this.map.getZoom() >= 15) MapControls.showPoiMarkers();
+    if (this.map.getZoom() >= this.markerZoomLimit)
+      MapControls.showPoiMarkers();
     MapControls.showPoiMarkers();
   }
 
@@ -114,6 +134,23 @@ export class MapControls {
     if (!map) return;
     const marker = L.marker([poi.lat, poi.lng], { icon: PoiMarker(poi) });
     if (onClick) marker.on('click', () => onClick(poi));
+    marker.on('mouseover', () => {
+      const popup = document.querySelector<HTMLDivElement>('#map-popup');
+      if (!popup) return;
+      const pos = map.latLngToContainerPoint([poi.lat, poi.lng]);
+      popup.style.left = pos.x + 'px';
+      popup.style.top = pos.y + 'px';
+      popup.style.display = '';
+      popup.innerText = poi.name;
+    });
+    marker.on('mouseout', () => {
+      const popup = document.querySelector<HTMLDivElement>('#map-popup');
+      if (!popup) return;
+      popup.style.left = '-9000px';
+      popup.style.top = '-9000px';
+      popup.style.display = 'none';
+      popup.innerText = '';
+    });
     MapControls.poiMarkers.push(marker);
   }
 

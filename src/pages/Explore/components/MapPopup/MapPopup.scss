@@ -1,0 +1,9 @@
+.MapPopup {
+  position: absolute;
+  z-index: 9998;
+  padding: 20px;
+  max-width: 300px;
+  background-color: $color-mono800;
+  transform: translate(-50%, calc(-100% - 24px));
+  border-radius: 4px;
+}

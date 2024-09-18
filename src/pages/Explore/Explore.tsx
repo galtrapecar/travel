@@ -27,6 +27,7 @@ import { decode } from '@googlemaps/polyline-codec';
 import { MapControls } from '../../mapControls';
 import CityDetails from '../../components/CityDetails/CityDetails';
 import PointOfInterestDetails from './components/PointOfInterestDetails/PointOfInterestDetails';
+import MapPopup from './components/MapPopup/MapPopup';
 
 const Explore = () => {
   const { addCity, trip } = useBuildTrip();
@@ -97,7 +98,7 @@ const Explore = () => {
       [city.lat, city.lng],
     ]);
     fetchPois(city.lat, city.lng).then((pois) => {
-      MapControls.addPointsOfInterest(pois);
+      MapControls.addPointsOfInterest(pois, setSelectedPoi);
     });
   };
 
@@ -170,6 +171,7 @@ const Explore = () => {
   return (
     <div className="Explore">
       <div id="map" ref={mapRef} />
+      <MapPopup />
       {
         <Modal
           open={modalOpen}
