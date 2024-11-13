@@ -14,11 +14,11 @@ const PointOfInterestDetails = () => {
   const { image, loading } = usePoiImage(poi);
 
   const openDuckDuckGo = () => {
-    searchOnDuckDuckGo(`${poi?.name}%20${poi?.type}`);
+    searchOnDuckDuckGo(`${poi?.name}%20${poi?.city?.city}`);
   };
 
   const openGoogle = () => {
-    searchOnGoogle(`${poi?.name}%20${poi?.type}`);
+    searchOnGoogle(`${poi?.name}%20${poi?.city?.city}`);
   };
 
   if (!poi) return null;

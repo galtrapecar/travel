@@ -3,12 +3,13 @@ import { PointOfInterest } from '../../types';
 import PointOfInterestIconHTML from '../PointOfInterestIconHTML/PointOfInterestIconHTML';
 
 const PoiMarker = (poi: PointOfInterest) => {
+  const icon = PointOfInterestIconHTML(poi.type);
   return L.divIcon({
     className: 'PoiMarker',
     html: `
       <div class='PoiMarker__pin'>
         <div class='PoiMarker__circle PoiMarker__circle--${poi.type}'>
-          <img src=${PointOfInterestIconHTML(poi.type)} />
+          ${Boolean(icon) ? `<img src=${icon} />` : ''}
         </div>
       </div>
     `,

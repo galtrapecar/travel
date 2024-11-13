@@ -25,6 +25,7 @@ export type PointOfInterest = {
   lng: number;
   iso2: string;
   location: string;
+  city?: Partial<City>;
 };
 
 export enum PointOfInterestType {

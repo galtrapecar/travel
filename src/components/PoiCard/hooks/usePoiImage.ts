@@ -10,7 +10,9 @@ const usePoiImage = (poi: PointOfInterest | null) => {
   const fetchImage = async () => {
     if (!poi || !poi.name) return;
     setLoading(true);
-    const url = ImagesAPIUrls.getImages(`${poi.name} ${poi.iso2}`);
+    const url = ImagesAPIUrls.getImages(
+      `${poi.name_ascii} ${poi.city?.city_ascii}`,
+    );
     try {
       const response = await fetch(url);
       const images: DuckDuckGoImage[] = await response.json();
